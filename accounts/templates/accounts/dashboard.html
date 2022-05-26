@@ -1,0 +1,70 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/stats.html' %}
+
+
+<br>
+
+<div class="row">
+    <div class="col-md-5">
+        <h5>Dashboard - Current Tenants:</h5>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createFBReport_form' %}">Create FB Report</a>
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createNonFBReport_form' %}">Create Non FB Report</a>
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createCovidReport_form' %}">Create Covid Compliance Report</a>
+            <table class="table table-sm" style="margin-top: 30px;">
+                <tr>
+                    <th>Tenant</th>
+                    <th>Rectification Needed</th>
+                    <th>Score</th>
+                    <th>Next Audit</th>
+                </tr>
+
+                {% for store in stores %}
+                <tr>
+                    <td>{{store.name}}</td>
+                    <td>{{store.rectificationNeeded}}</td>
+                    <td>{{store.score}}</td>
+                    <td>{{store.audit_date}}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <h5>Rectifications Pending Approval:</h5>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'rectify_form' %}">Submit Rectification</a>
+            <div style="margin:0; padding:0; overflow-x: scroll;">
+            <table class="table table-sm" style="margin-top: 20px;">
+                <tr>
+                    <th>Report No.</th>
+                    <th>Tenant</th>
+                    <th>Issue</th>
+                    <th>Covid Compliance Issue</th>
+                    <th>Date Updated</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.report}}</td>
+                    <td>{{order.store}}</td>
+                    <td>{{order.issue}}</td>
+                    <td>{{order.covid_compliance}}</td>
+                    <td>{{order.date_created}}</td>
+                    <td>{{order.status}}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+#logo {
+}
+body,
+.bg {
+  background-color: #fefdf8 !important;
+}
+#score {
+  background-color: #f2a63c;
+}
+#AuditDay {
+  background-color: #f2a63c;
+}
+#rectify {
+  background-color: #f2a63c;
+}
+
+*.btn-primary {
+  background-color: #ff7705;
+  border-color: #eb6b00;
+}
+
+*.btn-primary:hover {
+  background-color: #f6c27e;
+  border-color: #eb6b00;
+}
+
+button.btn-primary:focus {
+  background-color: #f6c27e !important;
+  border-color: #eb6b00;
+}
+a.btn-primary {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

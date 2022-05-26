@@ -1,0 +1,35 @@
+{% extends 'accounts/main.html' %}
+
+{% block title %} - Announcements{% endblock title %}
+
+{% block content %}
+    <br>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+                    <h5>Announcements</h5>
+                </div>
+                <div class="card card-body">
+                <table class="table table-sm">
+                        <tr>
+                         <th style="width: 20%;">Date Created</th>
+                         <th style="width: 15%;">Title</th>
+                         <th style="width: 65%;">Announcement</th>
+                        </tr>
+            
+                    {% for announcement in announcements %}
+                        <tr>
+                        <td>{{announcement.date_created}}</td>
+                        <td>{{announcement.announcement_title}}</td>
+                        <td>{{announcement.announcement_text}}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+{% endblock %}

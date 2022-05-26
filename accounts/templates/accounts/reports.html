@@ -1,0 +1,35 @@
+{% extends 'accounts/main.html' %}
+{% block title %} - Reports{% endblock title %}
+{% block content %}
+    <br>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+                    <h5>Reports</h5>
+                </div>
+                <div class="card card-body">
+                <table class="table table-sm">
+                        <tr>
+                         <th>Report Number</th>
+                         <th>Tenant</th>
+                         <th>Date Created</th>
+                         <th>Total Score</th>
+                        </tr>
+            
+                    {% for report in reports %}
+                        <tr>
+                        <td>{{report.report_number}}</td>
+                        <td>{{report.store.name}}</td>
+                        <td>{{report.date_created}}</td>
+                        <td>{{report.score}}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+{% endblock %}

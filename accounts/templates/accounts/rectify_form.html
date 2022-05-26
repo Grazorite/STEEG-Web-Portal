@@ -1,0 +1,64 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block title %} - Rectify Form{% endblock title %}
+
+{% block cssblock %}
+<style>
+    input{
+        margin-right: 10px!important;
+    }
+    select{
+        margin-left: 10px!important;
+        max-width: 95vw!important;
+    }
+
+
+    #id_store {
+        width: 10vw;
+        margin-left: 55px!important;
+    }
+
+    #id_fbreport {
+        width: 10vw;
+        margin-left: 34px!important;
+    }
+
+    #id_nonfbreport {
+        width: 10vw;
+        margin-bottom: 30px;
+    }
+
+    #id_covid_compliance {
+        width: 76vw;
+    }
+    #id_issue {
+        margin-left: 89px!important;
+        width: 76vw;
+        margin-bottom: 30px;
+    }
+    #id_upload_image{
+        margin-bottom: 30px;
+    }
+
+</style>
+{% endblock cssblock %}
+
+{% block content %}
+<div style="margin: 0 0;">
+    <div>
+        <div style="margin: 20px 0px; color: #EA7C14">
+            <h1>Submit Rectification</h1>
+        </div>
+    </div>
+    <div style="padding-left: 10px;">
+        <form action=" " enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" name="Submit">
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
