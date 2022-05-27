@@ -1,9 +1,14 @@
 # Todo
 - rename variable names
 - understand how the app works
+- pick out which functionalities we need
 
-## to run:
-`python manage.py runserver`
+## Required modules
+Use pip or conda to install these packages!
+- `django`
+- `django_csv_exports`
+## To run
+`python manage.py runserver` - server should open at `http://127.0.0.1:8000/`
 CTRL + C to stop server
 
 LOGIN:
