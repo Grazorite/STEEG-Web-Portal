@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name='store',
             old_name='complaint',
-            new_name='rectificationNeeded',
+            new_name='jobPriority',
         ),
     ]

@@ -16,7 +16,7 @@
             <table class="table table-sm" style="margin-top: 30px;">
                 <tr>
                     <th>Tenant</th>
-                    <th>Rectification Needed</th>
+                    <th>Job Priority</th>
                     <th>Score</th>
                     <th>Next Audit</th>
                 </tr>
@@ -24,7 +24,7 @@
                 {% for store in stores %}
                 <tr>
                     <td>{{store.name}}</td>
-                    <td>{{store.rectificationNeeded}}</td>
+                    <td>{{store.jobPriority}}</td>
                     <td>{{store.score}}</td>
                     <td>{{store.audit_date}}</td>
                 </tr>

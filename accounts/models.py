@@ -52,7 +52,7 @@ class Store(models.Model):
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True, blank=True)
     email = models.CharField(max_length=200, null=True, blank=True)
-    rectificationNeeded = models.BooleanField(null=True)
+    jobPriority = models.BooleanField(null=True)
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
     description = models.CharField(max_length=200, null=True, blank=True)
     # to be calculated
