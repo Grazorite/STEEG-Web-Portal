@@ -185,9 +185,13 @@ class job_status(models.Model):
         ('P3', 'P3'),
         ('NA', 'NA'),
     )
+    approvalStatus = (
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+    )
     service_order_number = models.CharField(max_length=200, primary_key=True)
     employment_id = models.ForeignKey(steeg_user, null=True, on_delete=models.SET_NULL)
-    approval_status = models.CharField(max_length=200, null=True)
+    approval_status = models.CharField(max_length=200, null=True, choices=approvalStatus)
     priority = models.CharField(max_length=200, null=True, choices=priorities)
 
     def __str__(self):

@@ -22,22 +22,19 @@ from .models import AuditScore
 
 @login_required(login_url='login')
 def home(request):
-    orders = Order.objects.all()
-    stores = Store.objects.all()
+    jobs = job_status.objects.all()
+    total_jobs = jobs.count()
+    pending = jobs.filter(Q(approval_status='Pending')).count()
 
-    total_orders = orders.count()
-    pending = orders.filter(Q(status='Pending') | Q(
-        status='Notification Sent')).count()
-
-    context = {'orders': orders, 'stores': stores, 'pending': pending}
+    context = {'jobs': jobs, 'total_jobs': total_jobs, 'pending':pending}
     return render(request, 'accounts/dashboard.html', context)
 
 
 @login_required(login_url='login')
-def stores(request):
-    stores = Store.objects.all()
+def jobs(request):
+    jobs = job_status.objects.all()
 
-    return render(request, 'accounts/stores.html', {'stores': stores})
+    return render(request, 'accounts/jobs.html', {'jobs': jobs})
 
 
 @login_required(login_url='login')

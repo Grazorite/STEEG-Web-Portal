@@ -6,7 +6,7 @@ from accounts.views import AccountChartView
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('stores/', views.stores, name='stores'),
+    path('jobs/', views.jobs, name='jobs'),
     path('reports/', views.reports, name='reports'),
     path('announcements/', views.announcements, name='announcements'),
     path('restricted/', views.accessRestricted, name="restricted"),

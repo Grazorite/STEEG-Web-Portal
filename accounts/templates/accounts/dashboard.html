@@ -15,18 +15,18 @@
             <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createApprovalForWork_form' %}">Create Approval For Work</a>
             <table class="table table-sm" style="margin-top: 30px;">
                 <tr>
-                    <th>System</th>
-                    <th>SAP Job No.</th>
-                    <th>Priority</th>
+                    <th>Service Order Number</th>
+                    <th>Employment ID</th>
                     <th>Status</th>
+                    <th>Priority</th>
                 </tr>
 
-                {% for store in stores %}
+                {% for job in jobs %}
                 <tr>
-                    <td>{{store.name}}</td>
-                    <td>{{store.jobPriority}}</td>
-                    <td>{{store.score}}</td>
-                    <td>{{store.audit_date}}</td>
+                    <td>{{job.service_order_number}}</td>
+                    <td>{{job.employment_id}}</td>
+                    <td>{{job.approval_status}}</td>
+                    <td>{{job.priority}}</td>
                 </tr>
                 {% endfor %}
 
@@ -52,7 +52,7 @@
                 {% for order in orders %}
                 <tr>
                     <td>{{order.report}}</td>
-                    <td>{{order.store}}</td>
+                    <td>{{order.job}}</td>
                     <td>{{order.issue}}</td>
                     <td>{{order.covid_compliance}}</td>
                     <td>{{order.date_created}}</td>

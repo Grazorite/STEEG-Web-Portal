@@ -1,6 +1,6 @@
 {% extends 'accounts/main.html' %}
 
-{% block title %} - Stores{% endblock title %}
+{% block title %} - jobs{% endblock title %}
 
 {% block content %}
     <br>
@@ -13,16 +13,17 @@
                 <div class="card card-body">
                     <table class="table">
                         <tr>
-                            <th>Store</th>
+                            <th>job_status</th>
                             <th>Category</th>
                             <th>Job Description</th>
                         </tr>
 
-                        {% for store in stores %}
+                        {% for job in jobs %}
 							<tr>
-								<td>{{store.name}}</td>
-								<td>{{store.category}}</td>
-								<td>{{store.job_description}}</td>
+								<td>{{job.service_order_number}</td>
+								<td>{{job.employment_id}</td>
+								<td>{{job.approval_status}}</td>
+                                <td>{{job.priority}}</td>
 							</tr>
 						{% endfor %}
 
