@@ -6,14 +6,8 @@ from .models import *
 # class RectifyAdmin(admin.ModelAdmin):
 #     fields = ['store', 'report', 'status', 'issue', 'covid_compliance']
 
-admin.site.register(NonFBReport)
-admin.site.register(FBReport)
-admin.site.register(CovidReport)
-admin.site.register(Store)
-admin.site.register(Tag)
-admin.site.register(Order)
-admin.site.register(NonFBChecklist)
-admin.site.register(Announcement)
-admin.site.register(CovidComplianceChecklist)
-admin.site.register(FBChecklist)
-admin.site.register(AuditScore)
+admin.site.register(steeg_user)
+admin.site.register(job_status)
+admin.site.register(equipment_inventory)
+admin.site.register(approval_for_work)
+admin.site.register(discrepancy_report)

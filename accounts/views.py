@@ -221,10 +221,10 @@ def createRectification(request):
 
 
 @login_required(login_url='login')
-def createNonFBReport(request):
+def createDiscrepancy(request):
     if request.method == 'POST':
 
-        form = CreateNonFBReportForm(request.POST, request.FILES)
+        form = createDiscrepancyForm(request.POST, request.FILES)
         if form.is_valid():
             # uploaded_file = request.FILES['file']
             # instance.save()
@@ -232,16 +232,16 @@ def createNonFBReport(request):
             return redirect('/')
 
     else:
-        form = CreateNonFBReportForm()
-    context = {'form': form, 'pageTitle': 'Report — non-F&B'}
+        form = createDiscrepancyForm()
+    context = {'form': form, 'pageTitle': 'Job Discrepancy Report'}
     return render(request, 'accounts/createReport_form.html', context)
 
 
 @login_required(login_url='login')
-def createFBReport(request):
+def createJob(request):
     if request.method == 'POST':
 
-        form = CreateFBReportForm(request.POST, request.FILES)
+        form = createJobForm(request.POST, request.FILES)
         if form.is_valid():
             # uploaded_file = request.FILES['file']
             # instance.save()
@@ -249,16 +249,16 @@ def createFBReport(request):
             return redirect('/')
 
     else:
-        form = CreateFBReportForm()
-    context = {'form': form, 'pageTitle': 'Report — F&B'}
+        form = createJobForm()
+    context = {'form': form, 'pageTitle': 'Job Creation Form'}
     return render(request, 'accounts/createReport_form.html', context)
 
 
 @login_required(login_url='login')
-def createCovidReport(request):
+def createApprovalForWork(request):
     if request.method == 'POST':
 
-        form = CreateCovidReportForm(request.POST, request.FILES)
+        form = createApprovalForWorkForm(request.POST, request.FILES)
         if form.is_valid():
             # uploaded_file = request.FILES['file']
             # instance.save()
@@ -266,8 +266,8 @@ def createCovidReport(request):
             return redirect('/')
 
     else:
-        form = CreateCovidReportForm()
-    context = {'form': form, 'pageTitle': 'Report — Covid Compliance'}
+        form = createApprovalForWorkForm()
+    context = {'form': form, 'pageTitle': 'Approval For Work'}
     return render(request, 'accounts/createReport_form.html', context)
 
 

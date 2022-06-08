@@ -49,12 +49,12 @@ class Store(models.Model):
         ('Non-FB', 'Non-FB')
     )
 
-    name = models.CharField(max_length=200, null=True)
-    phone = models.CharField(max_length=200, null=True, blank=True)
+    system_name = models.CharField(max_length=200, null=True)
+    system_id = models.CharField(max_length=200, null=True, blank=True)
     email = models.CharField(max_length=200, null=True, blank=True)
     jobPriority = models.BooleanField(null=True)
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
-    description = models.CharField(max_length=200, null=True, blank=True)
+    job_description = models.CharField(max_length=200, null=True, blank=True)
     # to be calculated
     score = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -161,3 +161,64 @@ class Statistics_page(models.Model):
 
     def __str__(self):
         return self.statistics_name
+
+class steeg_user(models.Model):
+    stakeholderTypes = (
+        ('RSAF', 'RSAF'),
+        ('DSTA', 'DSTA'),
+        ('Workshop Manager', 'Workshop Manager'),
+        ('Workshop Engineer', 'Workshop Engineer'),
+    )
+    employment_id = models.CharField(max_length=200, primary_key=True)
+    user_name = models.CharField(max_length=200, null=True)
+    contact_number = models.CharField(max_length=200, null=True)
+    stakeholder_type = models.CharField(max_length=200, null=True, choices=stakeholderTypes)
+    
+    def __str__(self):
+        return self.employment_id
+
+class job_status(models.Model):
+    priorities = (
+        ('AOG', 'AOG'),
+        ('P1', 'P1'),
+        ('P2', 'P2'),
+        ('P3', 'P3'),
+        ('NA', 'NA'),
+    )
+    service_order_number = models.CharField(max_length=200, primary_key=True)
+    employment_id = models.ForeignKey(steeg_user, null=True, on_delete=models.SET_NULL)
+    approval_status = models.CharField(max_length=200, null=True)
+    priority = models.CharField(max_length=200, null=True, choices=priorities)
+
+    def __str__(self):
+        return self.service_order_number
+
+class equipment_inventory(models.Model):
+    serial_number = models.CharField(max_length=200, primary_key=True)
+    service_order_number = models.ForeignKey(job_status, null=True, on_delete=models.SET_NULL)
+    system_type = models.CharField(max_length=200, null=True)
+
+
+class approval_for_work(models.Model):
+    AFW_id = models.IntegerField(primary_key=True)
+    service_order_number = models.ForeignKey(job_status, null=True, on_delete=models.SET_NULL)
+    employment_id = models.ForeignKey(steeg_user, null=True, on_delete=models.SET_NULL)
+    AFW_status = models.BooleanField(null=True)
+    def __str__(self):
+        return str(self.AFW_id)
+
+class discrepancy_report(models.Model):
+    cause_of_delay = (
+        ('Parts Missing', 'Parts Missing'),
+        ('Equipment Faulty', 'Equipment Faulty'),
+        ('To be assessed for OEM repair', 'To be assessed for OEM repair'),
+        ('Pending further evaluation', 'Pending further evaluation'),
+        ('Priority given to others', 'Priority given to others'),
+    )
+    discrepancy_id = models.CharField(max_length=200, primary_key=True)
+    service_order_number = models.ForeignKey(job_status, null=True, on_delete=models.SET_NULL)
+    cause_of_delay = models.CharField(max_length=200, null=True, choices=cause_of_delay)
+    expected_delay_duration = models.IntegerField()
+    def __str__(self):
+        return self.discrepancy_id
+

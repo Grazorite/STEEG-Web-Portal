@@ -15,14 +15,14 @@
                         <tr>
                             <th>Store</th>
                             <th>Category</th>
-                            <th>Description</th>
+                            <th>Job Description</th>
                         </tr>
 
                         {% for store in stores %}
 							<tr>
 								<td>{{store.name}}</td>
 								<td>{{store.category}}</td>
-								<td>{{store.description}}</td>
+								<td>{{store.job_description}}</td>
 							</tr>
 						{% endfor %}
 

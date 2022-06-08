@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Order, NonFBReport, FBReport, CovidReport, NonFBChecklist, CovidComplianceChecklist, FBChecklist
+from .models import Order, NonFBReport, FBReport, CovidReport, NonFBChecklist, CovidComplianceChecklist, FBChecklist, steeg_user, job_status, equipment_inventory, approval_for_work, discrepancy_report
 
 
 class RectifyForm(forms.ModelForm):
@@ -10,7 +10,6 @@ class RectifyForm(forms.ModelForm):
         model = Order
         fields = ['store', 'Non_FB_Report', 'FB_Report',
                   'Covid_Compliance_Report', 'upload_image']
-
 
 class EmailForm(forms.Form):
     email = forms.EmailField()
@@ -20,38 +19,20 @@ class EmailForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
 
-class CreateNonFBReportForm(forms.ModelForm):
+class createDiscrepancyForm(forms.ModelForm):
     class Meta:
-        model = NonFBReport
-        fields = ['store', 'report_number', 'compliance', 'score']
+        model = discrepancy_report
+        fields = ['discrepancy_id', 'service_order_number', 'cause_of_delay', 'expected_delay_duration']
 
-    def __init__(self, *args, **kwargs):
-        super(CreateNonFBReportForm, self).__init__(*args, **kwargs)
-        self.fields['compliance'].widget = forms.CheckboxSelectMultiple()
-        self.fields['compliance'].queryset = NonFBChecklist.objects.all()
-
-
-class CreateFBReportForm(forms.ModelForm):
+class createJobForm(forms.ModelForm):
     class Meta:
-        model = FBReport
-        fields = ['store', 'report_number', 'compliance', 'score']
+        model = job_status
+        fields = ['service_order_number', 'employment_id', 'approval_status', 'priority']
 
-    def __init__(self, *args, **kwargs):
-        super(CreateFBReportForm, self).__init__(*args, **kwargs)
-        self.fields['compliance'].widget = forms.CheckboxSelectMultiple()
-        self.fields['compliance'].queryset = FBChecklist.objects.all()
-
-
-class CreateCovidReportForm(forms.ModelForm):
+class createApprovalForWorkForm(forms.ModelForm):
     class Meta:
-        model = CovidReport
-        fields = ['store', 'report_number', 'compliance', 'score']
-
-    def __init__(self, *args, **kwargs):
-        super(CreateCovidReportForm, self).__init__(*args, **kwargs)
-        self.fields['compliance'].widget = forms.CheckboxSelectMultiple()
-        self.fields['compliance'].queryset = CovidComplianceChecklist.objects.all()
-
+        model = approval_for_work
+        fields = ['AFW_id', 'service_order_number', 'employment_id', 'AFW_status']
 
 class CreateUserForm(UserCreationForm):
     def clean(self):
