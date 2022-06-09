@@ -80,9 +80,16 @@ WSGI_APPLICATION = 'crm1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'mssql',
+        'NAME': 'STEEG-capstone',
+        'USER': 'steeg-capstone@steeg-capstone',
+        'PASSWORD': 'Opshub2022',
+        'HOST': 'steeg-capstone.database.windows.net',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'SQL Server Native Client 11.0',
+        },
+    },
 }
 
 
