@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
-from accounts.views import home, jobs, reports, announcements, accessRestricted, loginPage, registerAdminPage, registerTenantPage, registerPage, logoutUser, createDiscrepancy, createJob, createApprovalForWork, createRectification, AccountChartView, EmailAttachementView
+from accounts.views import home, jobs, reports, announcements, accessRestricted, loginPage, registerAdminPage, registerTenantPage, registerPage, logoutUser, createDiscrepancy, createJob, createApprovalForWork, createRectification, AccountChartView
 
 class TestUrls(SimpleTestCase):
     '''
@@ -85,9 +85,4 @@ class TestUrls(SimpleTestCase):
         url = reverse('chart')
         print(resolve(url))
         self.assertEquals(resolve(url).func.view_class, AccountChartView)
-        
-    # email with file
-    def test_emailAttachment_url_is_resolved(self):
-        url = reverse('send_email')
-        print(resolve(url))
-        self.assertEquals(resolve(url).func, EmailAttachementView)
+

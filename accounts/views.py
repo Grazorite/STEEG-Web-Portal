@@ -56,28 +56,6 @@ def announcements(request):
     return render(request, 'accounts/announcements.html', {'announcements': announcements})
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def EmailAttachementView(request):
-    form = EmailForm(request.POST, request.FILES)
-    if form.is_valid():
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-        email = form.cleaned_data['email']
-        files = request.FILES.getlist('attach')
-        try:
-            mail = EmailMessage(
-                subject, message, settings.EMAIL_HOST_USER, [email])
-            for f in files:
-                mail.attach(f.name, f.read(), f.content_type)
-            mail.send()
-            return redirect('/')
-            return render(request, 'accounts/send_email.html', {'form': form, 'error_message': 'Sent email to %s' % email})
-        except:
-            return render(request, 'send_email.html', {'form': form, 'error_message': 'Either the attachment is too big or corrupt'})
-    return render(request, 'accounts/send_email.html', {'form': form, 'error_message': 'Unable to send email. Please try again later'})
-
-
 @unauthenticated_user
 def registerPage(request):
     return render(request, 'accounts/register.html')

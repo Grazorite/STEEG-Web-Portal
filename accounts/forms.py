@@ -11,14 +11,6 @@ class RectifyForm(forms.ModelForm):
         fields = ['store', 'Non_FB_Report', 'FB_Report',
                   'Covid_Compliance_Report', 'upload_image']
 
-class EmailForm(forms.Form):
-    email = forms.EmailField()
-    subject = forms.CharField(max_length=100)
-    attach = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    message = forms.CharField(widget=forms.Textarea)
-
-
 class createDiscrepancyForm(forms.ModelForm):
     class Meta:
         model = discrepancy_report

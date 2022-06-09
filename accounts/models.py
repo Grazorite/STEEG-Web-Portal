@@ -149,13 +149,6 @@ class AuditScore(models.Model):
         return "{}: {}".format(self.name, self.score)
 
 
-class Send_email(models.Model):
-    email = models.CharField(max_length=200, null=True)
-
-    def __str__(self):
-        return self.email
-
-
 class Statistics_page(models.Model):
     statistics_name = models.CharField(max_length=200, null=True)
 
