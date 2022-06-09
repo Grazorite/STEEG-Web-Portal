@@ -49,40 +49,11 @@ def reports(request):
     context = {'reports': reports, 'total_score': total_score}
     return render(request, 'accounts/reports.html', context)
 
-# def statistics_page(request):
-#     statistics_page = Statistics_page.objects.all()
-#     return render(request, 'accounts/stats.html', {'statistics_page': statistics_page})
-
 
 @login_required(login_url='login')
 def announcements(request):
     announcements = Announcement.objects.all()
     return render(request, 'accounts/announcements.html', {'announcements': announcements})
-
-# @user_passes_test(lambda u: u.is_superuser)
-# def send_email(request):
-#         form = EmailForm()
-#         if request.method == 'POST':
-#             form = EmailForm(request.POST, request.FILES)
-#             if form.is_valid():
-#                 subject = request.POST.get('subject')
-#                 message = request.POST.get('message')
-#                 recipient = form.cleaned_data.get('email')
-#                 upload = request.FILES['upload']
-#                 send_mail(subject,
-#                 message, settings.EMAIL_HOST_USER, [recipient], fail_silently=True)
-#                 messages.success(request, 'Success!')
-#                 return redirect('/')
-
-#                 try:
-#                     mail = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [email])
-#                     mail.attach(attach.name, attach.read(), attach.content_type)
-#                     mail.send()
-#                     return render(request, self.template_name, {'email_form': form, 'error_message': 'Sent email to %s'%email})
-#                 except:
-#                     return render(request, self.template_name, {'email_form': form, 'error_message': 'Either the attachment is too big or corrupt'})
-
-#         return render(request, 'accounts/send_email.html', {'form': form})
 
 
 @login_required(login_url='login')
@@ -282,7 +253,7 @@ def accessRestricted(request):
     return render(request, 'accounts/restricted.html')
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def testAccess(request):
-    return render(request, 'accounts/dashboard.html')
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
+# def testAccess(request):
+#     return render(request, 'accounts/dashboard.html')

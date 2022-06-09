@@ -5,16 +5,14 @@ from accounts.views import AccountChartView
 
 
 urlpatterns = [
+    # main
     path('', views.home, name='home'),
     path('jobs/', views.jobs, name='jobs'),
     path('reports/', views.reports, name='reports'),
     path('announcements/', views.announcements, name='announcements'),
     path('restricted/', views.accessRestricted, name="restricted"),
-
-    #email with file
-    path('send_email/', views.EmailAttachementView, name='send_email'),
-    # path('statistics_page/', views.statistics_page, name='statistics_page'),
-    
+   
+   # user access
     path('login/', views.loginPage, name='login'),
     path('register/admin/', views.registerAdminPage, name='registeradmin'),
     path('register/tenant/', views.registerTenantPage, name='registertenant'),
@@ -30,6 +28,9 @@ urlpatterns = [
     # charts
     path('chart/', AccountChartView.as_view(), name='chart'),
 
+    # email with file
+    path('send_email/', views.EmailAttachementView, name='send_email'),
+
     # test (delete later)
-    path('testAccess/', views.testAccess, name='testAccess'),
+    # path('testAccess/', views.testAccess, name='testAccess'),
 ]
