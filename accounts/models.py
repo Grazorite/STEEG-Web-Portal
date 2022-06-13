@@ -177,6 +177,37 @@ class steeg_user(models.Model):
     def __str__(self):
         return self.employment_id
 
+class Ip220610Cleaned(models.Model):
+    service_ord = models.BigIntegerField(db_column='SERVICE_ORD', primary_key=True)  # Field name made lowercase.
+    service_order_user_status = models.CharField(db_column='SERVICE_ORDER_USER_STATUS', max_length=50)  # Field name made lowercase.
+    notification_user_status = models.CharField(db_column='NOTIFICATION_USER_STATUS', max_length=50)  # Field name made lowercase.
+    priority = models.CharField(db_column='Priority', max_length=50)  # Field name made lowercase.
+    mat = models.CharField(db_column='MAT', max_length=50)  # Field name made lowercase.
+    customer_po_number = models.BigIntegerField(db_column='CUSTOMER_PO_NUMBER', blank=True, null=True)  # Field name made lowercase.
+    initial_po_number = models.CharField(db_column='Initial_PO_Number', max_length=1, blank=True, null=True)  # Field name made lowercase.
+    mo_number = models.BigIntegerField(db_column='MO_NUMBER', blank=True, null=True)  # Field name made lowercase.
+    equipment_description = models.CharField(db_column='EQUIPMENT_DESCRIPTION', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    model_number = models.CharField(db_column='MODEL_NUMBER', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    serial_no = models.CharField(db_column='SERIAL_NO', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    date_in = models.DateField(db_column='DATE_IN')  # Field name made lowercase.
+    required_start_date = models.DateField(db_column='Required_Start_Date')  # Field name made lowercase.
+    required_end_date = models.DateField(db_column='Required_End_Date', blank=True, null=True)  # Field name made lowercase.
+    reported_fault_long_text = models.CharField(db_column='Reported_Fault_Long_Text', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    capacity_hour = models.FloatField(db_column='CAPACITY_HOUR')  # Field name made lowercase.
+    enduser = models.CharField(db_column='ENDUSER', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    main_work_center = models.CharField(db_column='MAIN_WORK_CENTER', max_length=50)  # Field name made lowercase.
+    ctat = models.SmallIntegerField(db_column='CTAT')  # Field name made lowercase.
+    sample_tat = models.DateTimeField(db_column='Sample_TAT')  # Field name made lowercase.
+    sampletatdate = models.DateField(db_column='SampleTATDate', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = True
+        db_table = 'IP_220610_Cleaned'
+
+    def __str__(self):
+        return str(self.service_ord)
+
+
 class job_status(models.Model):
     priorities = (
         ('AOG', 'AOG'),
@@ -220,8 +251,9 @@ class discrepancy_report(models.Model):
         ('Priority given to others', 'Priority given to others'),
     )
     discrepancy_id = models.CharField(max_length=200, primary_key=True)
-    service_order_number = models.ForeignKey(job_status, null=True, on_delete=models.SET_NULL)
+    service_ord = models.ForeignKey(Ip220610Cleaned, null=True, on_delete=models.SET_NULL)
     cause_of_delay = models.CharField(max_length=200, null=True, choices=cause_of_delay)
+    discrepancy_creation_date = models.DateField()
     expected_delay_duration = models.IntegerField()
     def __str__(self):
         return self.discrepancy_id

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Order, NonFBReport, FBReport, CovidReport, NonFBChecklist, CovidComplianceChecklist, FBChecklist, steeg_user, job_status, equipment_inventory, approval_for_work, discrepancy_report
+from .models import Order, Ip220610Cleaned, NonFBReport, FBReport, CovidReport, NonFBChecklist, CovidComplianceChecklist, FBChecklist, steeg_user, job_status, equipment_inventory, approval_for_work, discrepancy_report
 
 
 class RectifyForm(forms.ModelForm):
@@ -22,12 +22,12 @@ class EmailForm(forms.Form):
 class createDiscrepancyForm(forms.ModelForm):
     class Meta:
         model = discrepancy_report
-        fields = ['discrepancy_id', 'service_order_number', 'cause_of_delay', 'expected_delay_duration']
+        fields = ['discrepancy_id', 'service_ord', 'cause_of_delay', 'discrepancy_creation_date', 'expected_delay_duration']
 
 class createJobForm(forms.ModelForm):
     class Meta:
-        model = job_status
-        fields = ['service_order_number', 'employment_id', 'approval_status', 'priority']
+        model = Ip220610Cleaned
+        fields = ['service_ord', 'priority', 'date_in', 'required_start_date', 'required_end_date', 'ctat']
 
 class createApprovalForWorkForm(forms.ModelForm):
     class Meta:
