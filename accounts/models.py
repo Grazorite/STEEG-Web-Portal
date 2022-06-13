@@ -178,6 +178,7 @@ class steeg_user(models.Model):
         return self.employment_id
 
 class Ip220610Cleaned(models.Model):
+
     service_ord = models.BigIntegerField(db_column='SERVICE_ORD', primary_key=True)  # Field name made lowercase.
     service_order_user_status = models.CharField(db_column='SERVICE_ORDER_USER_STATUS', max_length=50)  # Field name made lowercase.
     notification_user_status = models.CharField(db_column='NOTIFICATION_USER_STATUS', max_length=50)  # Field name made lowercase.
@@ -233,15 +234,6 @@ class equipment_inventory(models.Model):
     service_order_number = models.ForeignKey(job_status, null=True, on_delete=models.SET_NULL)
     system_type = models.CharField(max_length=200, null=True)
 
-
-class approval_for_work(models.Model):
-    AFW_id = models.IntegerField(primary_key=True)
-    service_order_number = models.ForeignKey(job_status, null=True, on_delete=models.SET_NULL)
-    employment_id = models.ForeignKey(steeg_user, null=True, on_delete=models.SET_NULL)
-    AFW_status = models.BooleanField(null=True)
-    def __str__(self):
-        return str(self.AFW_id)
-
 class discrepancy_report(models.Model):
     cause_of_delay = (
         ('Parts Missing', 'Parts Missing'),
@@ -253,8 +245,18 @@ class discrepancy_report(models.Model):
     discrepancy_id = models.CharField(max_length=200, primary_key=True)
     service_ord = models.ForeignKey(Ip220610Cleaned, null=True, on_delete=models.SET_NULL)
     cause_of_delay = models.CharField(max_length=200, null=True, choices=cause_of_delay)
-    discrepancy_creation_date = models.DateField()
+    discrepancy_creation_date = models.DateField(null=True)
     expected_delay_duration = models.IntegerField()
     def __str__(self):
         return self.discrepancy_id
 
+
+class approval_for_work(models.Model):
+    AFW_id = models.IntegerField(primary_key=True)
+    service_ord = models.ForeignKey(Ip220610Cleaned, null=True, on_delete=models.SET_NULL)
+    discrepancy_id = models.ForeignKey(discrepancy_report, null=True, on_delete=models.SET_NULL)
+    employment_id = models.ForeignKey(steeg_user, null=True, on_delete=models.SET_NULL)
+    approval_creation_date = models.DateField(null=True)
+    AFW_status = models.BooleanField(null=True) 
+    def __str__(self):
+        return str(self.AFW_id)
