@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Order, Ip220610Cleaned, NonFBReport, FBReport, CovidReport, NonFBChecklist, CovidComplianceChecklist, FBChecklist, steeg_user, job_status, equipment_inventory, approval_for_work, discrepancy_report
-from .widgets import DatePickerInput
+from .models import Order, Ip220610Cleaned, JobUpdateStart, JobUpdateEnd, JobUpdateComplete, steeg_user, job_status, equipment_inventory, approval_for_work, discrepancy_report
+from .widgets import DatePickerInput, DateTimePickerInput
 
 class RectifyForm(forms.ModelForm):
     class Meta:
@@ -38,22 +38,43 @@ class createApprovalForWorkForm(forms.ModelForm):
         model = approval_for_work
         fields = ['approval_creation_date', 'AFW_id', 'service_ord', 'discrepancy_id','AFW_status']
 
-class CreateUserForm(UserCreationForm):
-    def clean(self):
-        cleaned_data = super(CreateUserForm, self).clean()
-
-        username = cleaned_data.get('username')
-        if username and User.objects.filter(username__iexact=username).exists():
-            self.add_error(
-                'username', 'A user with that username already exists.')
-
-        email = cleaned_data.get('email')
-        if email and User.objects.filter(email__iexact=email).exists():
-            self.add_error(
-                'email', 'A user with that email already exists.')
-
-        return cleaned_data
-
+class createJobUpdateStartForm(forms.ModelForm):
+    start_date_input = forms.DateTimeField(widget=DatePickerInput)
+    start_date_actual = forms.DateTimeField(widget=DatePickerInput)
     class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        model = JobUpdateStart
+        fields = ['job_update_id','service_ord','cause_of_delay', 'start_date_actual', 'start_date_actual']
+
+class createJobUpdateEndForm(forms.ModelForm):
+    end_date_input = forms.DateTimeField(widget=DatePickerInput)
+    end_date_actual = forms.DateTimeField(widget=DatePickerInput)
+    class Meta:
+        model = JobUpdateEnd
+        fields = ['service_ord', 'job_update_id', 'end_date_actual', 'end_date_input']
+
+class createJobUpdateCompleteForm(forms.ModelForm):
+    mal_end_date = forms.DateTimeField(widget=DatePickerInput)
+    job_complete_input = forms.DateTimeField(widget=DatePickerInput)
+    class Meta:
+        model = JobUpdateComplete
+        fields = ['service_ord', 'mal_end_date', 'job_complete_input']
+
+# class CreateUserForm(UserCreationForm):
+#     def clean(self):
+#         cleaned_data = super(CreateUserForm, self).clean()
+
+#         username = cleaned_data.get('username')
+#         if username and User.objects.filter(username__iexact=username).exists():
+#             self.add_error(
+#                 'username', 'A user with that username already exists.')
+
+#         email = cleaned_data.get('email')
+#         if email and User.objects.filter(email__iexact=email).exists():
+#             self.add_error(
+#                 'email', 'A user with that email already exists.')
+
+#         return cleaned_data
+
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'password1', 'password2']

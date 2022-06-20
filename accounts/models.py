@@ -98,9 +98,6 @@ class CovidReport(models.Model):
     def __str__(self):
         return str(self.report_number)  # give name in the admin panel
 
-# TODO: rename to Rectify
-
-
 class Order(models.Model):
     STATUS = (
         ('Notification Sent', 'Notification Sent'),
@@ -208,6 +205,64 @@ class Ip220610Cleaned(models.Model):
     def __str__(self):
         return str(self.service_ord)
 
+class job_update_start_mock(models.Model):
+    service_ord = models.BigIntegerField(db_column='SERVICE_ORD')  # Field name made lowercase.
+    job_update_id = models.BigIntegerField(db_column='Jobupdateid', primary_key=True)  # Field name made lowercase.
+    cause_of_delay = models.CharField(db_column='Cause_of_Delay', max_length=50)  # Field name made lowercase.
+    start_date_actual = models.DateField()
+    start_date_input = models.DateField()
+
+    class Meta:
+        managed = True
+        db_table = 'job_update_start'
+
+
+class job_update_end_mock(models.Model):
+    service_ord = models.BigIntegerField(db_column='Service_Order')  # Field name made lowercase.
+    job_update_id = models.BigIntegerField(db_column='Jobupdateid', primary_key=True)  # Field name made lowercase.
+    end_date_actual = models.DateField(null=True)
+    end_date_input = models.DateField(null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'job_update_end'
+
+
+class job_update_complete_mock(models.Model):
+    service_ord = models.BigIntegerField(db_column='Service_Order', primary_key=True)  # Field name made lowercase.
+    job_update_id = models.BigIntegerField(db_column='Jobupdateid', null=True)  # Field name made lowercase.
+    mal_end_date = models.DateField(blank=True, null=True)
+    job_complete_input = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'job_update_complete'
+
+class JobUpdateStart(models.Model):
+    delays = (
+        ('A/W SPARE', 'A/W SPARE'),
+        ('A/W FACILITY', 'A/W FACILITY'),
+        ('A/W OTHER JOB', 'A/W OTHER JOB'),
+        ('OTH', 'OTH'),
+        ('AWAIT UNIT ACCEPT', 'AWAIT UNIT ACCEPT'),
+        ('MULTIPLE FAULTS', 'MULTIPLE FAULTS'),
+    )
+    service_ord = models.ForeignKey(Ip220610Cleaned, null=True, on_delete=models.SET_NULL)
+    job_update_id = models.BigIntegerField(primary_key=True)
+    cause_of_delay = models.CharField(max_length=200, null=True, choices=delays)
+    start_date_actual = models.DateTimeField(null=True)
+    start_date_input = models.DateTimeField(null=True)
+
+class JobUpdateEnd(models.Model):
+    service_ord = models.ForeignKey(Ip220610Cleaned, null=True, on_delete=models.SET_NULL)
+    job_update_id = models.OneToOneField(JobUpdateStart, on_delete=models.CASCADE, primary_key=True)
+    end_date_actual = models.DateTimeField(null=True)
+    end_date_input = models.DateTimeField(null=True)
+
+class JobUpdateComplete(models.Model):
+    service_ord = models.OneToOneField(Ip220610Cleaned, on_delete=models.CASCADE, primary_key=True)
+    mal_end_date = models.DateTimeField(null=True)
+    job_complete_input = models.DateTimeField(null=True)
 
 class job_status(models.Model):
     priorities = (

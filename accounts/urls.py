@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from accounts.views import AccountChartView
-
+from .views import AccountChartView
 
 
 urlpatterns = [
@@ -13,18 +12,21 @@ urlpatterns = [
 
     #email with file
     path('send_email/', views.EmailAttachementView, name='send_email'),
-    # path('statistics_page/', views.statistics_page, name='statistics_page'),
+    path('statistics_page/', views.statistics_page, name='statistics_page'),
     
     path('login/', views.loginPage, name='login'),
-    path('register/admin/', views.registerAdminPage, name='registeradmin'),
-    path('register/tenant/', views.registerTenantPage, name='registertenant'),
-    path('register/', views.registerPage, name='register'),
+    # path('register/admin/', views.registerAdminPage, name='registeradmin'),
+    # path('register/tenant/', views.registerTenantPage, name='registertenant'),
+    # path('register/', views.registerPage, name='register'),
     path('logout/', views.logoutUser, name='logout'),
 
     # forms
     path('createDiscrepancy_form/', views.createDiscrepancy, name='createDiscrepancy_form'),
     path('createJob_form/', views.createJob, name='createJob_form'),
     path('createApprovalForWork_form/', views.createApprovalForWork, name='createApprovalForWork_form'),
+    path('createJobUpdateStart_form/', views.createJobUpdateStart, name='createJobUpdateStart_form'),
+    path('createJobUpdateEnd_form/', views.createJobUpdateEnd, name='createJobUpdateEnd_form'),
+    path('createJobUpdateComplete_form/', views.createJobUpdateComplete, name='createJobUpdateComplete_form'),
     path('rectify_form/', views.createRectification, name='rectify_form'),
 
     # charts

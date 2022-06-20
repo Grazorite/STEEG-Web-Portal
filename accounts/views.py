@@ -16,18 +16,17 @@ from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.views import View
 from django.views.generic import TemplateView
-from .models import AuditScore
 # Create your views here.
 
 
-@login_required(login_url='login')
-def home(request):
-    jobs = job_status.objects.all()
-    total_jobs = jobs.count()
-    pending = jobs.filter(Q(approval_status='Pending')).count()
+# @login_required(login_url='login')
+# def home(request):
+#     jobs = job_status.objects.all()
+#     total_jobs = jobs.count()
+#     pending = jobs.filter(Q(approval_status='Pending')).count()
 
-    context = {'jobs': jobs, 'total_jobs': total_jobs, 'pending':pending}
-    return render(request, 'accounts/dashboard.html', context)
+#     context = {'jobs': jobs, 'total_jobs': total_jobs, 'pending':pending}
+#     return render(request, 'accounts/dashboard.html', context)
 
 
 @login_required(login_url='login')
@@ -36,22 +35,29 @@ def jobs(request):
 
     return render(request, 'accounts/jobs.html', {'jobs': jobs})
 
+@login_required(login_url='login')
+def home(request):
+    ip_jobs = Ip220610Cleaned.objects.all()
+    total_ip_jobs = ip_jobs.count()
+
+    context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs}
+    return render(request, 'accounts/dashboard.html', context)
+
 
 @login_required(login_url='login')
 def reports(request):
     reports = NonFBReport.objects.all()
     print(reports)
-    # TODO: fix total_score
-    #total_score = reports.compliance.all()
+
     total_score = 0
     print(total_score)
 
     context = {'reports': reports, 'total_score': total_score}
     return render(request, 'accounts/reports.html', context)
 
-# def statistics_page(request):
-#     statistics_page = Statistics_page.objects.all()
-#     return render(request, 'accounts/stats.html', {'statistics_page': statistics_page})
+def statistics_page(request):
+    statistics_page = Statistics_page.objects.all()
+    return render(request, 'accounts/stats.html', {'statistics_page': statistics_page})
 
 
 @login_required(login_url='login')
@@ -112,71 +118,71 @@ def registerPage(request):
     return render(request, 'accounts/register.html')
 
 
-@unauthenticated_user
-def registerTenantPage(request):
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username').lower()
-            email = form.cleaned_data.get('email').lower()
+# @unauthenticated_user
+# def registerTenantPage(request):
+#     form = CreateUserForm()
+#     if request.method == 'POST':
+#         form = CreateUserForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username').lower()
+#             email = form.cleaned_data.get('email').lower()
 
-            brk = True
+#             brk = True
 
-            try:
-                User.objects.get(username__iexact=username)
-            except:
-                brk = False
+#             try:
+#                 User.objects.get(username__iexact=username)
+#             except:
+#                 brk = False
 
-            if brk:
-                messages.warning(request, 'Username already in use')
-                return redirect('login')
+#             if brk:
+#                 messages.warning(request, 'Username already in use')
+#                 return redirect('login')
 
-            user = form.save()
+#             user = form.save()
 
-            group = Group.objects.get(name='tenant')
-            user.groups.add(group)
+#             group = Group.objects.get(name='tenant')
+#             user.groups.add(group)
 
-            messages.success(request, 'Account was created for ' + username)
+#             messages.success(request, 'Account was created for ' + username)
 
-            return redirect('login')
+#             return redirect('login')
 
-    context = {'form': form}
-    return render(request, 'accounts/registerTenant.html', context)
+#     context = {'form': form}
+#     return render(request, 'accounts/registerTenant.html', context)
 
 
-@unauthenticated_user
-def registerAdminPage(request):
+# @unauthenticated_user
+# def registerAdminPage(request):
 
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username').lower()
-            email = form.cleaned_data.get('email').lower()
+#     form = CreateUserForm()
+#     if request.method == 'POST':
+#         form = CreateUserForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username').lower()
+#             email = form.cleaned_data.get('email').lower()
 
-            brk = True
+#             brk = True
 
-            try:
-                User.objects.get(username__iexact=username)
-            except:
-                brk = False
+#             try:
+#                 User.objects.get(username__iexact=username)
+#             except:
+#                 brk = False
 
-            if brk:
-                messages.warning(request, 'Username already in use')
-                return redirect('login')
+#             if brk:
+#                 messages.warning(request, 'Username already in use')
+#                 return redirect('login')
 
-            user = form.save()
+#             user = form.save()
 
-            group = Group.objects.get(name='admin')
-            user.groups.add(group)
+#             group = Group.objects.get(name='admin')
+#             user.groups.add(group)
 
-            messages.success(request, 'Account was created for ' + username)
+#             messages.success(request, 'Account was created for ' + username)
 
-            return redirect('login')
+#             return redirect('login')
 
-    context = {'form': form}
-    return render(request, 'accounts/registerAdmin.html', context)
+#     context = {'form': form}
+#     return render(request, 'accounts/registerAdmin.html', context)
 
 
 @unauthenticated_user
@@ -267,6 +273,54 @@ def createApprovalForWork(request):
     context = {'form': form, 'pageTitle': 'Approval For Work'}
     return render(request, 'accounts/createReport_form.html', context)
 
+@login_required(login_url='login')
+def createJobUpdateStart(request):
+    if request.method == 'POST':
+
+        form = createJobUpdateStartForm(request.POST, request.FILES)
+        if form.is_valid():
+            # uploaded_file = request.FILES['file']
+            # instance.save()
+            form.save()
+            return redirect('/')
+
+    else:
+        form = createJobUpdateStartForm()
+    context = {'form': form, 'pageTitle': 'Job Update Start'}
+    return render(request, 'accounts/createJobUpdateStart_form.html', context)
+
+
+@login_required(login_url='login')
+def createJobUpdateEnd(request):
+    if request.method == 'POST':
+
+        form = createJobUpdateEndForm(request.POST, request.FILES)
+        if form.is_valid():
+            # uploaded_file = request.FILES['file']
+            # instance.save()
+            form.save()
+            return redirect('/')
+
+    else:
+        form = createJobUpdateEndForm()
+    context = {'form': form, 'pageTitle': 'Job Update End'}
+    return render(request, 'accounts/createJobUpdateEnd_form.html', context)
+
+@login_required(login_url='login')
+def createJobUpdateComplete(request):
+    if request.method == 'POST':
+
+        form = createJobUpdateCompleteForm(request.POST, request.FILES)
+        if form.is_valid():
+            # uploaded_file = request.FILES['file']
+            # instance.save()
+            form.save()
+            return redirect('/')
+
+    else:
+        form = createJobUpdateCompleteForm()
+    context = {'form': form, 'pageTitle': 'Job Completion'}
+    return render(request, 'accounts/createJobUpdateComplete_form.html', context)
 
 class AccountChartView(TemplateView):
     template_name = 'accounts/chart.html'
