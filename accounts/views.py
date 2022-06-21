@@ -31,16 +31,19 @@ from django.views.generic import TemplateView
 
 @login_required(login_url='login')
 def jobs(request):
-    jobs = job_status.objects.all()
+    jobs = MainDB.objects.all()
 
     return render(request, 'accounts/jobs.html', {'jobs': jobs})
 
 @login_required(login_url='login')
 def home(request):
-    ip_jobs = Ip220610Cleaned.objects.all()
+    ip_jobs = MainDB.objects.all()
     total_ip_jobs = ip_jobs.count()
+    approvals = approval_for_work.objects.all()
+    total_approvals = approvals.count()
 
-    context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs}
+    context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs,
+                'approvals': approvals, 'total_approvals': total_approvals}
     return render(request, 'accounts/dashboard.html', context)
 
 
@@ -287,7 +290,7 @@ def createJobUpdateStart(request):
     else:
         form = createJobUpdateStartForm()
     context = {'form': form, 'pageTitle': 'Job Update Start'}
-    return render(request, 'accounts/createJobUpdateStart_form.html', context)
+    return render(request, 'accounts/createReport_form.html', context)
 
 
 @login_required(login_url='login')
@@ -304,7 +307,7 @@ def createJobUpdateEnd(request):
     else:
         form = createJobUpdateEndForm()
     context = {'form': form, 'pageTitle': 'Job Update End'}
-    return render(request, 'accounts/createJobUpdateEnd_form.html', context)
+    return render(request, 'accounts/createReport_form.html', context)
 
 @login_required(login_url='login')
 def createJobUpdateComplete(request):
@@ -320,7 +323,7 @@ def createJobUpdateComplete(request):
     else:
         form = createJobUpdateCompleteForm()
     context = {'form': form, 'pageTitle': 'Job Completion'}
-    return render(request, 'accounts/createJobUpdateComplete_form.html', context)
+    return render(request, 'accounts/createReport_form.html', context)
 
 class AccountChartView(TemplateView):
     template_name = 'accounts/chart.html'

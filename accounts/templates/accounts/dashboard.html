@@ -8,11 +8,39 @@
 
 <div class="row">
     <div class="col-md-5">
-        <h5>Create Job:</h5>
         <div class="card card-body">
+            <h5>Job Forms:</h5>
             <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJob_form' %}">Create Job</a>
             <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createDiscrepancy_form' %}">Create Job Discrepancy Report</a>
             <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createApprovalForWork_form' %}">Create Approval For Work</a>
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateStart_form' %}">Update Job Status (Delay Start)</a>
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateEnd_form' %}">Update Job Status (Delay End)</a>
+            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
+        </div>
+        <br>
+        <div class="card card-body">
+            <table class="table table-sm" style="margin-top: 30px;">
+                <h5>Pending Approvals:</h5>
+                <tr>
+                    <th>AFW ID</th>
+                    <th>Service Order</th>
+                    <th>Approval Given</th>
+                    <th>AFW Request Date</th>
+                </tr>
+                {% for approval in approvals%}
+                <tr>
+                    <td>{{approval.AFW_id}}</td>
+                    <td>{{approval.service_ord}}</td>
+                    <td>{{approval.AFW_status}}</td>
+                    <td>{{approval.approval_creation_date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card card-body">
+            <h5>Job Statuses:</h5>
             <table class="table table-sm" style="margin-top: 30px;">
                 <tr>
                     <th>Service Order Number</th>
@@ -36,39 +64,6 @@
 
             </table>
         </div>
-    </div>
-
-    <div class="col-md-7">
-        <h5>Job Statuses:</h5>
-        <div class="card card-body">
-            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateStart_form' %}">Update Job Status (Delay Start)</a>
-            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateEnd_form' %}">Update Job Status (Delay End)</a>
-            <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
-            <div style="margin:0; padding:0; overflow-x: scroll;">
-            <table class="table table-sm" style="margin-top: 20px;">
-                <tr>
-                    <th>Service Order Number</th>
-                    <th>End User</th>
-                    <th>Service Order User Status</th>
-                    <th>Notification User Status</th>
-                    <th>Priority</th>
-                    <th>CTAT</th>
-                </tr>
-
-                {% for ip_job in ip_jobs %}
-                <tr>
-                    <td>{{ip_job.service_ord}}</td>
-                    <td>{{ip_job.enduser}}</td>
-                    <td>{{ip_job.service_order_user_status}}</td>
-                    <td>{{ip_job.notification_user_status}}</td>
-                    <td>{{ip_job.priority}}</td>
-                    <td>{{ip_job.ctat}}</td>
-                </tr>
-                {% endfor %}
-
-            </table>
-        </div>
-
     </div>
 
 </div>
