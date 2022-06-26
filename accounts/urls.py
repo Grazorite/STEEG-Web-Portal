@@ -15,9 +15,9 @@ urlpatterns = [
     path('statistics_page/', views.statistics_page, name='statistics_page'),
     
     path('login/', views.loginPage, name='login'),
-    # path('register/admin/', views.registerAdminPage, name='registeradmin'),
-    # path('register/tenant/', views.registerTenantPage, name='registertenant'),
-    # path('register/', views.registerPage, name='register'),
+    path('register/admin/', views.registerAdminPage, name='registeradmin'),
+    path('register/tenant/', views.registerTenantPage, name='registertenant'),
+    path('register/', views.registerPage, name='register'),
     path('logout/', views.logoutUser, name='logout'),
 
     # forms

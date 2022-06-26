@@ -68,30 +68,30 @@ def announcements(request):
     announcements = Announcement.objects.all()
     return render(request, 'accounts/announcements.html', {'announcements': announcements})
 
-# @user_passes_test(lambda u: u.is_superuser)
-# def send_email(request):
-#         form = EmailForm()
-#         if request.method == 'POST':
-#             form = EmailForm(request.POST, request.FILES)
-#             if form.is_valid():
-#                 subject = request.POST.get('subject')
-#                 message = request.POST.get('message')
-#                 recipient = form.cleaned_data.get('email')
-#                 upload = request.FILES['upload']
-#                 send_mail(subject,
-#                 message, settings.EMAIL_HOST_USER, [recipient], fail_silently=True)
-#                 messages.success(request, 'Success!')
-#                 return redirect('/')
+@user_passes_test(lambda u: u.is_superuser)
+def send_email(request):
+        form = EmailForm()
+        if request.method == 'POST':
+            form = EmailForm(request.POST, request.FILES)
+            if form.is_valid():
+                subject = request.POST.get('subject')
+                message = request.POST.get('message')
+                recipient = form.cleaned_data.get('email')
+                upload = request.FILES['upload']
+                send_mail(subject,
+                message, settings.EMAIL_HOST_USER, [recipient], fail_silently=True)
+                messages.success(request, 'Success!')
+                return redirect('/')
 
-#                 try:
-#                     mail = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [email])
-#                     mail.attach(attach.name, attach.read(), attach.content_type)
-#                     mail.send()
-#                     return render(request, self.template_name, {'email_form': form, 'error_message': 'Sent email to %s'%email})
-#                 except:
-#                     return render(request, self.template_name, {'email_form': form, 'error_message': 'Either the attachment is too big or corrupt'})
+                try:
+                    mail = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [email])
+                    mail.attach(attach.name, attach.read(), attach.content_type)
+                    mail.send()
+                    return render(request, self.template_name, {'email_form': form, 'error_message': 'Sent email to %s'%email})
+                except:
+                    return render(request, self.template_name, {'email_form': form, 'error_message': 'Either the attachment is too big or corrupt'})
 
-#         return render(request, 'accounts/send_email.html', {'form': form})
+        return render(request, 'accounts/send_email.html', {'form': form})
 
 
 @login_required(login_url='login')
@@ -121,71 +121,71 @@ def registerPage(request):
     return render(request, 'accounts/register.html')
 
 
-# @unauthenticated_user
-# def registerTenantPage(request):
-#     form = CreateUserForm()
-#     if request.method == 'POST':
-#         form = CreateUserForm(request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username').lower()
-#             email = form.cleaned_data.get('email').lower()
+@unauthenticated_user
+def registerTenantPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email').lower()
 
-#             brk = True
+            brk = True
 
-#             try:
-#                 User.objects.get(username__iexact=username)
-#             except:
-#                 brk = False
+            try:
+                User.objects.get(username__iexact=username)
+            except:
+                brk = False
 
-#             if brk:
-#                 messages.warning(request, 'Username already in use')
-#                 return redirect('login')
+            if brk:
+                messages.warning(request, 'Username already in use')
+                return redirect('login')
 
-#             user = form.save()
+            user = form.save()
 
-#             group = Group.objects.get(name='tenant')
-#             user.groups.add(group)
+            group = Group.objects.get(name='tenant')
+            user.groups.add(group)
 
-#             messages.success(request, 'Account was created for ' + username)
+            messages.success(request, 'Account was created for ' + username)
 
-#             return redirect('login')
+            return redirect('login')
 
-#     context = {'form': form}
-#     return render(request, 'accounts/registerTenant.html', context)
+    context = {'form': form}
+    return render(request, 'accounts/registerTenant.html', context)
 
 
-# @unauthenticated_user
-# def registerAdminPage(request):
+@unauthenticated_user
+def registerAdminPage(request):
 
-#     form = CreateUserForm()
-#     if request.method == 'POST':
-#         form = CreateUserForm(request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username').lower()
-#             email = form.cleaned_data.get('email').lower()
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email').lower()
 
-#             brk = True
+            brk = True
 
-#             try:
-#                 User.objects.get(username__iexact=username)
-#             except:
-#                 brk = False
+            try:
+                User.objects.get(username__iexact=username)
+            except:
+                brk = False
 
-#             if brk:
-#                 messages.warning(request, 'Username already in use')
-#                 return redirect('login')
+            if brk:
+                messages.warning(request, 'Username already in use')
+                return redirect('login')
 
-#             user = form.save()
+            user = form.save()
 
-#             group = Group.objects.get(name='admin')
-#             user.groups.add(group)
+            group = Group.objects.get(name='admin')
+            user.groups.add(group)
 
-#             messages.success(request, 'Account was created for ' + username)
+            messages.success(request, 'Account was created for ' + username)
 
-#             return redirect('login')
+            return redirect('login')
 
-#     context = {'form': form}
-#     return render(request, 'accounts/registerAdmin.html', context)
+    context = {'form': form}
+    return render(request, 'accounts/registerAdmin.html', context)
 
 
 @unauthenticated_user
