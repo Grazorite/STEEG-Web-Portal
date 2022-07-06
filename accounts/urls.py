@@ -28,9 +28,6 @@ urlpatterns = [
     # charts
     path('chart/', AccountChartView.as_view(), name='chart'),
 
-    # email with file
-    path('send_email/', views.EmailAttachementView, name='send_email'),
-
     # test (delete later)
     # path('testAccess/', views.testAccess, name='testAccess'),
 ]
