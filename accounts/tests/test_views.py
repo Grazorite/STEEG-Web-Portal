@@ -11,32 +11,44 @@ class TestViews(TestCase):
     to run: $ python manage.py test accounts
     '''
     def setUp(self):
-        self.client = Client()
-        self.client.force_login(User.objects.get_or_create(username='esc')[0])
-
+        self.credentials = {
+            'username': 'testuser',
+            'password': 'secret'}
+        User.objects.create_user(**self.credentials)
+        
         self.login_url = reverse('login')
         self.announcements_url = reverse('announcements')
         self.reports_url = reverse('reports')
         self.chart_url = reverse('chart')
-    
+        
+    def test_login(self):
+        # send login data
+        response = self.client.post('/login/', self.credentials, follow=True)
+        # should be logged in now, copy-paste above code for each test case below
+        self.assertTrue(response.context['user'].is_active)
+
     def test_login_GET(self):
         response = self.client.get(self.login_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/login.html')
     
-    ## TODO: actually make the login work (in setUp), else HTTP 302 redirect error occurs because its not logged in for some reason
-    # def test_announcements_GET(self):
-    #     response = self.client.get(self.announcements_url)
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'accounts/announcements.html')
+    def test_announcements_GET(self):
+        response = self.client.post('/login/', self.credentials, follow=True)
+
+        response = self.client.get(self.announcements_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/announcements.html')
     
-    # def test_reports_GET(self):
-    #     response = self.client.get(self.reports_url)
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'accounts/reports.html')
+    def test_reports_GET(self):
+        response = self.client.post('/login/', self.credentials, follow=True)
+
+        response = self.client.get(self.reports_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/reports.html')
     
-    # this WORKS!!!
     def test_chart_GET(self):
+        response = self.client.post('/login/', self.credentials, follow=True)
+
         response = self.client.get(self.chart_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/chart.html')
