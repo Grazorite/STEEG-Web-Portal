@@ -1,14 +1,9 @@
-# Todo
-- rename variable names
-- understand how the app works
-- pick out which functionalities we need
-
-## Required modules
+# Required modules
 Use pip or conda to install these packages!
 - `django`
 - `django_csv_exports`
 
-## To run
+# To run
 `python manage.py runserver` - server should open at `http://127.0.0.1:8000/`
 CTRL + C to stop server
 
@@ -18,7 +13,7 @@ LOGIN:
 
 add `/admin` to the end of server url in browser to access backend
 
-## Modifying database
+# Modifying database
 ENSURE `db.sqlite3` is deleted first!!
 any edits to the code need to run the following commands:
 - `python manage.py makemigrations`
