@@ -15,6 +15,7 @@ class TestViews(TestCase):
             'username': 'testuser',
             'password': 'secret'}
         User.objects.create_user(**self.credentials)
+        self.client = Client()
         
         self.login_url = reverse('login')
         self.announcements_url = reverse('announcements')
