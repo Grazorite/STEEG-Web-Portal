@@ -318,6 +318,6 @@ class approval_for_work(models.Model):
     discrepancy_id = models.ForeignKey(discrepancy_report, null=True, on_delete=models.SET_NULL)
     employment_id = models.ForeignKey(steeg_user, null=True, on_delete=models.SET_NULL)
     approval_creation_date = models.DateField(null=True)
-    AFW_status = models.BooleanField(null=True) 
+    AFW_status = models.BooleanField(default = False) 
     def __str__(self):
         return str(self.AFW_id)
