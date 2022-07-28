@@ -18,21 +18,9 @@ from django.views import View
 from django.views.generic import TemplateView
 # Create your views here.
 
-
-# @login_required(login_url='login')
-# def home(request):
-#     jobs = job_status.objects.all()
-#     total_jobs = jobs.count()
-#     pending = jobs.filter(Q(approval_status='Pending')).count()
-
-#     context = {'jobs': jobs, 'total_jobs': total_jobs, 'pending':pending}
-#     return render(request, 'accounts/dashboard.html', context)
-
-
 @login_required(login_url='login')
 def jobs(request):
     jobs = MainDB.objects.all()
-
     return render(request, 'accounts/jobs.html', {'jobs': jobs})
 
 @login_required(login_url='login')
@@ -41,11 +29,9 @@ def home(request):
     total_ip_jobs = ip_jobs.count()
     approvals = approval_for_work.objects.all()
     total_approvals = approvals.count()
-
     context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs,
                 'approvals': approvals, 'total_approvals': total_approvals}
     return render(request, 'accounts/dashboard.html', context)
-
 
 @login_required(login_url='login')
 def reports(request):
@@ -122,7 +108,7 @@ def registerPage(request):
 
 
 @unauthenticated_user
-def registerTenantPage(request):
+def registerEngineerPage(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -143,7 +129,7 @@ def registerTenantPage(request):
 
             user = form.save()
 
-            group = Group.objects.get(name='tenant')
+            group = Group.objects.get(name='Engineer')
             user.groups.add(group)
 
             messages.success(request, 'Account was created for ' + username)
@@ -151,7 +137,7 @@ def registerTenantPage(request):
             return redirect('login')
 
     context = {'form': form}
-    return render(request, 'accounts/registerTenant.html', context)
+    return render(request, 'accounts/registerEngineer.html', context)
 
 
 @unauthenticated_user
