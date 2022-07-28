@@ -44,11 +44,6 @@ def reports(request):
     
     return render(request, 'accounts/reports.html', context)
 
-def statistics_page(request):
-    statistics_page = Statistics_page.objects.all()
-    return render(request, 'accounts/stats.html', {'statistics_page': statistics_page})
-
-
 @login_required(login_url='login')
 def approvals(request):
     approvals = approval_for_work.objects.all()
@@ -362,15 +357,6 @@ def createJobUpdateComplete(request):
         form = createJobUpdateCompleteForm()
     context = {'form': form, 'pageTitle': 'Job Completion'}
     return render(request, 'accounts/createReport_form.html', context)
-
-class AccountChartView(TemplateView):
-    template_name = 'accounts/chart.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['qs'] = AuditScore.objects.all()
-        return context
-
 
 @login_required(login_url='login')
 def accessRestricted(request):

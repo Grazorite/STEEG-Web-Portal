@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import AccountChartView
 
 
 urlpatterns = [
@@ -29,9 +28,6 @@ urlpatterns = [
     path('createJobUpdateStart_form/', views.createJobUpdateStart, name='createJobUpdateStart_form'),
     path('createJobUpdateEnd_form/', views.createJobUpdateEnd, name='createJobUpdateEnd_form'),
     path('createJobUpdateComplete_form/', views.createJobUpdateComplete, name='createJobUpdateComplete_form'),
-
-    # charts
-    path('chart/', AccountChartView.as_view(), name='chart'),
 
     # test (delete later)
     path('testAccess/', views.testAccess, name='testAccess'),
