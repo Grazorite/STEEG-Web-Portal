@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)
 
@@ -41,7 +40,6 @@ class FBChecklist(models.Model):
         return self.item
 
 # used as template for Create Report form
-
 
 class Store(models.Model):
     CATEGORY = (

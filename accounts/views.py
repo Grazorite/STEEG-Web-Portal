@@ -39,9 +39,9 @@ def reports(request):
     total_ip_jobs = ip_jobs.count()
     approvals = approval_for_work.objects.all()
     total_approvals = approvals.count()
-
     context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs,
                 'approvals': approvals, 'total_approvals': total_approvals}
+    
     return render(request, 'accounts/reports.html', context)
 
 def statistics_page(request):
@@ -50,9 +50,9 @@ def statistics_page(request):
 
 
 @login_required(login_url='login')
-def announcements(request):
-    announcements = approval_for_work.objects.all()
-    return render(request, 'accounts/announcements.html', {'announcements': announcements})
+def approvals(request):
+    approvals = approval_for_work.objects.all()
+    return render(request, 'accounts/approvals.html', {'approvals': approvals})
 
 @user_passes_test(lambda u: u.is_superuser)
 def send_email(request):
@@ -141,6 +141,71 @@ def registerEngineerPage(request):
 
 
 @unauthenticated_user
+def registerDstarPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email').lower()
+
+            brk = True
+
+            try:
+                User.objects.get(username__iexact=username)
+            except:
+                brk = False
+
+            if brk:
+                messages.warning(request, 'Username already in use')
+                return redirect('login')
+
+            user = form.save()
+
+            group = Group.objects.get(name='DSTAR')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for ' + username)
+
+            return redirect('login')
+
+    context = {'form': form}
+    return render(request, 'accounts/registerDstar.html', context)
+
+
+@unauthenticated_user
+def registerRsafPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email').lower()
+
+            brk = True
+
+            try:
+                User.objects.get(username__iexact=username)
+            except:
+                brk = False
+
+            if brk:
+                messages.warning(request, 'Username already in use')
+                return redirect('login')
+
+            user = form.save()
+
+            group = Group.objects.get(name='RSAF')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for ' + username)
+
+            return redirect('login')
+
+    context = {'form': form}
+    return render(request, 'accounts/registerRsaf.html', context)
+
+@unauthenticated_user
 def registerAdminPage(request):
 
     form = CreateUserForm()
@@ -197,19 +262,6 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
-
-
-@login_required(login_url='login')
-def createRectification(request):
-    if request.method == 'POST':
-        form = RectifyForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    else:
-        form = RectifyForm()
-    context = {'form': form}
-    return render(request, 'accounts/rectify_form.html', context)
 
 
 @login_required(login_url='login')

@@ -7,7 +7,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('jobs/', views.jobs, name='jobs'),
     path('reports/', views.reports, name='reports'),
-    path('announcements/', views.announcements, name='announcements'),
+    path('approvals/', views.approvals, name='approvals'),
     path('restricted/', views.accessRestricted, name="restricted"),
 
     #email with file
@@ -17,6 +17,8 @@ urlpatterns = [
     path('login/', views.loginPage, name='login'),
     path('register/admin/', views.registerAdminPage, name='registeradmin'),
     path('register/engineer/', views.registerEngineerPage, name='registerengineer'),
+    path('register/dstar/', views.registerDstarPage, name='registerdstar'),
+    path('register/rsaf/', views.registerRsafPage, name='registerrsaf'),
     path('register/', views.registerPage, name='register'),
     path('logout/', views.logoutUser, name='logout'),
 
@@ -27,7 +29,6 @@ urlpatterns = [
     path('createJobUpdateStart_form/', views.createJobUpdateStart, name='createJobUpdateStart_form'),
     path('createJobUpdateEnd_form/', views.createJobUpdateEnd, name='createJobUpdateEnd_form'),
     path('createJobUpdateComplete_form/', views.createJobUpdateComplete, name='createJobUpdateComplete_form'),
-    path('rectify_form/', views.createRectification, name='rectify_form'),
 
     # charts
     path('chart/', AccountChartView.as_view(), name='chart'),

@@ -1,6 +1,6 @@
 {% extends 'accounts/main.html' %}
 
-{% block title %} - Announcements{% endblock title %}
+{% block title %} - approvals{% endblock title %}
 
 {% block content %}
     <br>
@@ -19,7 +19,7 @@
                          <th style="width: 25%;">AFW Request Date</th>
                         </tr>
             
-                    {% for announcement in announcements %}
+                    {% for announcement in approvals %}
                         <tr>
                         <td>{{announcement.AFW_id}}</td>
                         <td>{{announcement.service_ord}}</td>
