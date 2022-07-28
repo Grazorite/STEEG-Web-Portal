@@ -49,13 +49,13 @@ def home(request):
 
 @login_required(login_url='login')
 def reports(request):
-    reports = NonFBReport.objects.all()
-    print(reports)
+    ip_jobs = MainDB.objects.all()
+    total_ip_jobs = ip_jobs.count()
+    approvals = approval_for_work.objects.all()
+    total_approvals = approvals.count()
 
-    total_score = 0
-    print(total_score)
-
-    context = {'reports': reports, 'total_score': total_score}
+    context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs,
+                'approvals': approvals, 'total_approvals': total_approvals}
     return render(request, 'accounts/reports.html', context)
 
 def statistics_page(request):
@@ -65,7 +65,7 @@ def statistics_page(request):
 
 @login_required(login_url='login')
 def announcements(request):
-    announcements = Announcement.objects.all()
+    announcements = approval_for_work.objects.all()
     return render(request, 'accounts/announcements.html', {'announcements': announcements})
 
 @user_passes_test(lambda u: u.is_superuser)

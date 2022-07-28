@@ -3,9 +3,7 @@
 {% block content %}
 {% include 'accounts/stats.html' %}
 
-
 <br>
-
 <div class="row">
     <div class="col-md-5">
         <div class="card card-body">
@@ -18,6 +16,9 @@
             <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
         </div>
         <br>
+        
+    </div>
+    <div class="col-md-7">
         <div class="card card-body">
             <table class="table table-sm" style="margin-top: 30px;">
                 <h5>Pending Approvals:</h5>
@@ -37,9 +38,7 @@
                 {% endfor %}
             </table>
         </div>
-    </div>
-    <div class="col-md-7">
-        <div class="card card-body">
+        <!-- <div class="card card-body">
             <h5>Job Statuses:</h5>
             <table class="table table-sm" style="margin-top: 30px;">
                 <tr>
@@ -63,7 +62,7 @@
                 {% endfor %}
 
             </table>
-        </div>
+        </div> -->
     </div>
 
 </div>

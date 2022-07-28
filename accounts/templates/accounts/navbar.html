@@ -11,13 +11,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'announcements' %}">Notifications<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'announcements' %}">Approvals<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'reports' %}">Current Jobs</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'jobs' %}">New Jobs</a>
+        <a class="nav-link" href="{% url 'reports' %}">Jobs</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'chart' %}">DashBoard</a>
@@ -27,7 +24,7 @@
           For Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'send_email' %}">Send Email to a Tenant</a>
+          <a class="dropdown-item" href="{% url 'send_email' %}">Generate Report</a>
         </div>
       </li>
     </ul>

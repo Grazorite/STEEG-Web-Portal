@@ -71,14 +71,14 @@ class createJobUpdateStartForm(forms.ModelForm):
     start_date_actual = forms.DateTimeField(widget=DatePickerInput)
     class Meta:
         model = Jobupdatestart
-        fields = ['job_update_id','service_ord','cause_of_delay', 'start_date_actual', 'start_date_input']
+        fields = ['job_update_id','service_ord', 'start_date_actual', 'start_date_input']
 
 class createJobUpdateEndForm(forms.ModelForm):
     end_date_input = forms.DateTimeField(widget=DatePickerInput)
     end_date_actual = forms.DateTimeField(widget=DatePickerInput)
     class Meta:
         model = Jobupdateend
-        fields = ['service_order', 'job_update', 'end_date_actual', 'end_date_input']
+        fields = ['service_order', 'job_update', 'end_date_actual', 'end_date_input', 'cause_of_delay']
 
 class createJobUpdateCompleteForm(forms.ModelForm):
     mal_end_date = forms.DateTimeField(widget=DatePickerInput)

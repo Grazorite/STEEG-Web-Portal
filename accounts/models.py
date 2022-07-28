@@ -206,7 +206,6 @@ class MainDB(models.Model):
 class Jobupdatestart(models.Model):
     service_ord = models.ForeignKey(MainDB, models.DO_NOTHING, db_column='SERVICE_ORD')  # Field name made lowercase.
     job_update_id = models.SmallIntegerField(primary_key=True)
-    cause_of_delay = models.CharField(max_length=50)
     start_date_actual = models.DateField()
     start_date_input = models.DateField()
 
@@ -218,10 +217,19 @@ class Jobupdatestart(models.Model):
         return str(self.job_update_id)
 
 class Jobupdateend(models.Model):
+    delays = (
+        ('A/W SPARE', 'A/W SPARE'),
+        ('A/W FACILITY', 'A/W FACILITY'),
+        ('A/W OTHER JOB', 'A/W OTHER JOB'),
+        ('OTH', 'OTH'),
+        ('AWAIT UNIT ACCEPT', 'AWAIT UNIT ACCEPT'),
+        ('MULTIPLE FAULTS', 'MULTIPLE FAULTS'),
+    )
     service_order = models.ForeignKey(MainDB, models.DO_NOTHING, db_column='SERVICE_ORDER')  # Field name made lowercase.
     job_update = models.OneToOneField(Jobupdatestart, models.DO_NOTHING, primary_key=True)
     end_date_actual = models.DateField()
     end_date_input = models.DateField()
+    cause_of_delay = models.CharField(max_length=200, null=True, choices=delays)
 
     class Meta:
         managed = False

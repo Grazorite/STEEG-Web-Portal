@@ -11,7 +11,7 @@ $(document).ready(function(){
         data: {
             labels: [{% for item in qs %}'{{item.name}}',{% endfor %}],
             datasets: [{
-                label: 'Audit scores of tenants',
+                label: 'Amount of Jobs',
                 data: [{% for item in qs %}'{{item.score}}',{% endfor %}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
