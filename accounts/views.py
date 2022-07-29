@@ -19,9 +19,9 @@ from django.views.generic import TemplateView
 # Create your views here.
 
 @login_required(login_url='login')
-def jobs(request):
+def dashboard(request):
     jobs = MainDB.objects.all()
-    return render(request, 'accounts/jobs.html', {'jobs': jobs})
+    return render(request, 'accounts/dashboard.html', {'jobs': jobs})
 
 @login_required(login_url='login')
 def home(request):
@@ -34,7 +34,7 @@ def home(request):
     return render(request, 'accounts/dashboard.html', context)
 
 @login_required(login_url='login')
-def reports(request):
+def jobs(request):
     ip_jobs = MainDB.objects.all()
     total_ip_jobs = ip_jobs.count()
     approvals = approval_for_work.objects.all()
@@ -43,6 +43,11 @@ def reports(request):
                 'approvals': approvals, 'total_approvals': total_approvals}
     
     return render(request, 'accounts/reports.html', context)
+
+def dash(request):
+    jobs = MainDB.objects.all()
+    return render(request, 'accounts/dashboard.html', {'jobs': jobs})
+
 
 @login_required(login_url='login')
 def approvals(request):
@@ -363,7 +368,7 @@ def accessRestricted(request):
     return render(request, 'accounts/restricted.html')
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def testAccess(request):
-    return render(request, 'accounts/dashboard.html')
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
+# def testAccess(request):
+#     return render(request, 'accounts/dashboard.html')

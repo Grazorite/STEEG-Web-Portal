@@ -5,13 +5,14 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('jobs/', views.jobs, name='jobs'),
-    path('reports/', views.reports, name='reports'),
+    path('dash/', views.dash, name='dash'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('approvals/', views.approvals, name='approvals'),
     path('restricted/', views.accessRestricted, name="restricted"),
 
     #email with file
     path('send_email/', views.EmailAttachementView, name='send_email'),
-    path('statistics_page/', views.statistics_page, name='statistics_page'),
+    # path('statistics_page/', views.statistics_page, name='statistics_page'),
     
     path('login/', views.loginPage, name='login'),
     path('register/admin/', views.registerAdminPage, name='registeradmin'),
@@ -29,6 +30,4 @@ urlpatterns = [
     path('createJobUpdateEnd_form/', views.createJobUpdateEnd, name='createJobUpdateEnd_form'),
     path('createJobUpdateComplete_form/', views.createJobUpdateComplete, name='createJobUpdateComplete_form'),
 
-    # test (delete later)
-    path('testAccess/', views.testAccess, name='testAccess'),
 ]
