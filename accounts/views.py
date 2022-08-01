@@ -20,12 +20,12 @@ from django.views.generic import TemplateView
 
 @login_required(login_url='login')
 def dashboard(request):
-    jobs = MainDB.objects.all()
+    jobs = Maintable.objects.all()
     return render(request, 'accounts/dashboard.html', {'jobs': jobs})
 
 @login_required(login_url='login')
 def home(request):
-    ip_jobs = MainDB.objects.all()
+    ip_jobs = Maintable.objects.all()
     total_ip_jobs = ip_jobs.count()
     approvals = approval_for_work.objects.all()
     total_approvals = approvals.count()
@@ -35,7 +35,7 @@ def home(request):
 
 @login_required(login_url='login')
 def jobs(request):
-    ip_jobs = MainDB.objects.all()
+    ip_jobs = Maintable.objects.all()
     total_ip_jobs = ip_jobs.count()
     approvals = approval_for_work.objects.all()
     total_approvals = approvals.count()
@@ -45,7 +45,7 @@ def jobs(request):
     return render(request, 'accounts/reports.html', context)
 
 def dash(request):
-    jobs = MainDB.objects.all()
+    jobs = Maintable.objects.all()
     return render(request, 'accounts/dashboard.html', {'jobs': jobs})
 
 

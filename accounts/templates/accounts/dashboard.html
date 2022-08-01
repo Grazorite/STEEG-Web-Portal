@@ -31,7 +31,7 @@
                 {% for approval in approvals%}
                 <tr>
                     <td>{{approval.AFW_id}}</td>
-                    <td>{{approval.service_ord}}</td>
+                    <td>{{approval.service_order}}</td>
                     <td>{{approval.AFW_status}}</td>
                     <td>{{approval.approval_creation_date}}</td>
                 </tr>
@@ -52,7 +52,7 @@
 
                 {% for ip_job in ip_jobs %}
                 <tr>
-                    <td>{{ip_job.service_ord}}</td>
+                    <td>{{ip_job.service_order}}</td>
                     <td>{{ip_job.enduser}}</td>
                     <td>{{ip_job.required_start_date}}</td>
                     <td>{{ip_job.required_end_date}}</td>
