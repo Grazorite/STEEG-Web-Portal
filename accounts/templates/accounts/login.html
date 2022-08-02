@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
     
 <head>
@@ -9,6 +10,7 @@
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 
     <style>
+
         body{
             background-color: #FFF9E3;    
         }
@@ -22,10 +24,10 @@
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			/* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			border-radius: 5px;
+			border-radius: 5px; */
 
 		}
 
@@ -100,17 +102,22 @@
 		h3 {
 			font-family: Tahoma, sans-serif;
 		}
-		
+        
+
     </style>
 
 </head>
 
 <body>
-    <div class="container" style="height: 100vh; width: 100vw;">
+    <div class="card card-body" style="height: 100vh; width: 100vw;">
         <div class="row w-100" style="margin: 0;">
-            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="container flex-column mx-auto" style="padding-top: 5vh;">
+                    <img src="{% static 'images/login_background.png' %}" height= 100% width="100%";>
+                </div>
+            </div>
             <div class=" col-md-6">
-                <div class="container flex-column mx-auto" style="padding-top: 14vh;">
+                <div class="container flex-column mx-auto" style="padding-top: 20vh;">
                     <div class="header mx-auto text-center">
                         <h1>{% include 'accounts/webappName.html' %}</h1>
                     </div>
@@ -164,8 +171,5 @@
         </div>
     </div>
 
-
-
-    <div class="circle" id="left"></div>
 	<div class="circle" id="right"></div>
 </body></html>

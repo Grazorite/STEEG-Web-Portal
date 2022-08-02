@@ -22,44 +22,50 @@ import csv
 # Create your views here.
 
 @login_required(login_url='login')
-def dashboard(request):
-    jobs = Maintable.objects.all()
-    return render(request, 'accounts/dashboard.html', {'jobs': jobs})
-
-@login_required(login_url='login')
 def home(request):
     maintable_jobs = Maintable.objects.all()
     total_maintable_jobs = maintable_jobs.count()
-    approvals = approval_for_work.objects.all()
-    total_approvals = approvals.count()
-    context = {'maintable_jobs': maintable_jobs, 'total_maintable_jobs': total_maintable_jobs,
-                'approvals': approvals, 'total_approvals': total_approvals}
-    return render(request, 'accounts/dashboard.html', context)
+    context = {
+            'maintable_jobs': maintable_jobs, 
+            'total_maintable_jobs': total_maintable_jobs,
+            }
+
+    return render(request, 'accounts/home.html', context)
+
 
 @login_required(login_url='login')
 def jobs(request):
     maintable_jobs = Maintable.objects.all()
     total_maintable_jobs = maintable_jobs.count()
-    approvals = approval_for_work.objects.all()
-    total_approvals = approvals.count()
-    context = {'maintable_jobs': maintable_jobs, 'total_maintable_jobs': total_maintable_jobs,
-                'approvals': approvals, 'total_approvals': total_approvals}
-    
+    context = {
+        'maintable_jobs': maintable_jobs, 
+        'total_maintable_jobs': total_maintable_jobs,
+        }
+
     return render(request, 'accounts/reports.html', context)
+
 
 def dash(request):
     jobs = Maintable.objects.all()
-    return render(request, 'accounts/dashboard.html', {'jobs': jobs})
+    return render(request, 'accounts/home.html', {'jobs': jobs})
 
 
 @login_required(login_url='login')
 def approvals(request):
     approvals = Maintable.objects.all()
+    total_maintable_jobs = approvals.count()
     approvals_filter = ApprovalFilter(request.GET, queryset=approvals)
+    filtered = approvals_filter.qs
+    total_filtered=len(filtered)
+
     context = {
         'approvals': approvals,
-        'approvals_filter': approvals_filter
+        'approvals_filter': approvals_filter,
+        'total_maintable_jobs': total_maintable_jobs,
+        'filtered': filtered,
+        'total_filtered': total_filtered
         }
+
     return render(request, 'accounts/approvals.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -78,18 +84,16 @@ def update_approval(request, service_order):
     return render(request, 'accounts/update_approval.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
-def send_email(request):
+def report_generation(request):
     completedJobs = Reportgeneration.objects.all()
     completed_job_filter = JobFilter(request.GET, queryset=completedJobs)
-
-    
 
     context = {
         'completedJobs': completedJobs,
         'completed_job_filter': completed_job_filter,
     }
 
-    return render(request, 'accounts/send_email.html', context)
+    return render(request, 'accounts/report_generation.html', context)
 
 def generate_report_csv(request):
     reportJobs = Reportgeneration.objects.all()
@@ -385,9 +389,3 @@ def createJobUpdateComplete(request):
 @login_required(login_url='login')
 def accessRestricted(request):
     return render(request, 'accounts/restricted.html')
-
-
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['admin'])
-# def testAccess(request):
-#     return render(request, 'accounts/dashboard.html')

@@ -5,13 +5,6 @@
 
 {% block cssblock %}
 <style>
-    #id_compliance li{
-        list-style-type: none;
-        margin-bottom: 20px;
-    }
-    #id_compliance{
-        padding-left: 5%;
-    }
     input{
         margin-right: 10px!important;
     }
@@ -22,7 +15,7 @@
 {% endblock cssblock %}
 
 {% block content %}
-<div style="margin: 0 5%;">
+<div class="card card-body" style="margin: 0 5%;">
     <div>
         <div style="margin: 20px 0px; color: #0069D9">
             <h1>{{ pageTitle }}</h1>
@@ -32,7 +25,7 @@
         <form action="" method="POST">
             {% csrf_token %}
             {{form.as_p}}
-            <input type="submit" name="submit">
+            <input type="submit" name="submit" class="btn btn-secondary">
 
         </form>
     </div>
