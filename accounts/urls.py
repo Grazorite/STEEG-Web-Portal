@@ -29,5 +29,6 @@ urlpatterns = [
     path('createJobUpdateStart_form/', views.createJobUpdateStart, name='createJobUpdateStart_form'),
     path('createJobUpdateEnd_form/', views.createJobUpdateEnd, name='createJobUpdateEnd_form'),
     path('createJobUpdateComplete_form/', views.createJobUpdateComplete, name='createJobUpdateComplete_form'),
+    path('update_approval/<service_order>', views.update_approval, name='update-approval')
 
 ]

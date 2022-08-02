@@ -61,6 +61,20 @@ def approvals(request):
         }
     return render(request, 'accounts/approvals.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
+def update_approval(request, service_order):
+    approval = Maintable.objects.get(pk=service_order)
+    form = createJobForm(request.POST or None, instance=approval)
+    if form.is_valid():
+        form.save()
+        return redirect('approvals')
+    
+    context = {
+        'approval': approval,
+        'form': form
+    }
+
+    return render(request, 'accounts/update_approval.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def send_email(request):
