@@ -18,6 +18,7 @@ from django.conf import settings
 from django.views import View
 from django.views.generic import TemplateView
 from .filters import *
+import csv
 # Create your views here.
 
 @login_required(login_url='login')
@@ -80,6 +81,9 @@ def update_approval(request, service_order):
 def send_email(request):
     completedJobs = Reportgeneration.objects.all()
     completed_job_filter = JobFilter(request.GET, queryset=completedJobs)
+
+    
+
     context = {
         'completedJobs': completedJobs,
         'completed_job_filter': completed_job_filter,
@@ -87,7 +91,33 @@ def send_email(request):
 
     return render(request, 'accounts/send_email.html', context)
 
+def generate_report_csv(request):
+    reportJobs = Reportgeneration.objects.all()
+    search = JobFilter(request.GET, queryset= reportJobs).qs
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=completed_jobs.csv'
 
+    # Create a csv writer
+    writer = csv.writer(response)
+
+    # Designate The Model
+    writer.writerow([
+        'SERVICE_ORDER', 'SYSTEM', 'MAT', 'PRIORITY_TEXT', 'MAL_START', 'MAL_END',
+        'CTAT', 'TET', 'Out_By', 'ATAT', 'A_W_SPARE', 'A_W_FACILITY', 'A_W_OTHER_JOB',
+        'INST', 'OTH', 'AWAIT_UNIT_ACCEPT', 'MULTIPLE_FAULTS', 'REMARKS', 
+        'EQUIPMENT_DESCRIPTION', 'MODEL_NUMBER', 'SERIAL_NO', 'Reported_Fault_Long_Text'
+        ])
+
+    #Loop Through Queryset
+    for i in search:
+        writer.writerow([
+            i.service_order, i.system, i.mat, i.priority_text, i.mal_start,
+            i.mal_end, i.ctat, i.tet, i.out_by, i.atat, i.a_w_spare, i.a_w_facility,
+            i.a_w_other_job, i.inst, i.oth, i.await_unit_accept, i.multiple_faults,
+            i.remarks, i.equipment_description, i.model_number, i.serial_no, i.reported_fault_long_text
+        ])
+
+    return response
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['admin'])
 

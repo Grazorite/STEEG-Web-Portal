@@ -39,7 +39,7 @@ class createDiscrepancyForm(forms.ModelForm):
         fields = ['discrepancy_id', 'service_order', 'cause_of_delay', 'discrepancy_creation_date', 'expected_delay_duration']    
 
 class createJobForm(forms.ModelForm):
-    date_in = forms.DateField(widget=DatePickerInput)
+    mal_start = forms.DateField(widget=DatePickerInput)
     required_start_date = forms.DateField(widget=DatePickerInput)
     required_end_date = forms.DateField(widget=DatePickerInput)
     class Meta:

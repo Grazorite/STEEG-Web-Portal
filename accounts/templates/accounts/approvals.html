@@ -30,9 +30,8 @@
                         <td>{{approval.mal_start}}</td>
                         <td>{{approval.approval_status}}</td>
                         <td align ="right">
-                            <a href="{% url 
-                                'update-approval' approval.service_order %}"
-                                class="btn btn-outline-secondary btn-sm">Update</a>
+                            <a href="{% url 'updateapproval' approval.service_order%}">
+                            <button class="btn btn-outline-secondary btn-sm">Update</button></a>
                         </td>
                         </tr>
                     {% endfor %}

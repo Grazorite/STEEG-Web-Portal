@@ -9,6 +9,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('approvals/', views.approvals, name='approvals'),
     path('restricted/', views.accessRestricted, name="restricted"),
+    path('generate_report_csv', views.generate_report_csv, name='generatereportcsv'),
 
     #email with file
     path('send_email/', views.send_email, name='send_email'),
@@ -29,6 +30,6 @@ urlpatterns = [
     path('createJobUpdateStart_form/', views.createJobUpdateStart, name='createJobUpdateStart_form'),
     path('createJobUpdateEnd_form/', views.createJobUpdateEnd, name='createJobUpdateEnd_form'),
     path('createJobUpdateComplete_form/', views.createJobUpdateComplete, name='createJobUpdateComplete_form'),
-    path('update_approval/<service_order>', views.update_approval, name='update-approval')
+    path('update_approval/<service_order>', views.update_approval, name='updateapproval')
 
 ]

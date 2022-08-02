@@ -25,11 +25,11 @@ class Maintable(models.Model):
         ('ENG', 'ENG'), ('ASTER', 'ASTER'),
         ('ICC-PH', 'ICC-PH'), ('PSTAR', 'PSTAR'),
     )
-    
+
     service_order = models.BigIntegerField(db_column='SERVICE_ORDER', primary_key=True)  # Field name made lowercase.
     service_order_user_status = models.CharField(db_column='SERVICE_ORDER_USER_STATUS', max_length=50, blank=True, null=True)  # Field name made lowercase.
     notification_user_status = models.CharField(db_column='NOTIFICATION_USER_STATUS', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    priority_text = models.CharField(db_column='PRIORITY_TEXT', max_length=50, blank=True, null=True, )  # Field name made lowercase.
+    priority_text = models.CharField(db_column='PRIORITY_TEXT', max_length=50, blank=True, null=True, choices=priorities)  # Field name made lowercase.
     mat = models.CharField(db_column='MAT', max_length=50, blank=True, null=True)  # Field name made lowercase.
     customer_po_number = models.CharField(db_column='CUSTOMER_PO_NUMBER', max_length=50, blank=True, null=True)  # Field name made lowercase.
     initial_po_number = models.CharField(db_column='Initial_PO_Number', max_length=1, blank=True, null=True)  # Field name made lowercase.

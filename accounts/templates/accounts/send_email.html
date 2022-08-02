@@ -5,12 +5,17 @@
 <div class="row">
     <div class="col-md-2">
         <div class="card card-body", style="margin: 0px 0px">
-            <h5>Download Report</h5>
+            <h5>Filter Results</h5>
             <form method="get">
                 <p>{{completed_job_filter.form}}</p>
                 <p>{{date_filter.form}}</p>
                 <button class="btn btn-sm btn-danger" type="submit">Filter</button>
             </form>
+        </div>
+        <div class="card card-body", style="margin: 0px 0px">
+            <h5>Download Report</h5>
+            <a href="{% url 'generatereportcsv' %}?{{request.GET.urlencode}}">
+            <button class="btn btn-sm btn-danger" type="button">Export To CSV</button></a>
         </div>
     </div>
     <div class="col-md-10">
