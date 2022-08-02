@@ -16,7 +16,6 @@
             <a class="btn btn-primary  btn-sm btn-block" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
         </div>
         <br>
-        
     </div>
     <div class="col-md-7">
         <div class="card card-body">
@@ -38,31 +37,6 @@
                 {% endfor %}
             </table>
         </div>
-        <!-- <div class="card card-body">
-            <h5>Job Statuses:</h5>
-            <table class="table table-sm" style="margin-top: 30px;">
-                <tr>
-                    <th>Service Order Number</th>
-                    <th>End User</th>
-                    <th>Job Start Date</th>
-                    <th>Required End Date</th>
-                    <th>Priority</th>
-                    <th>CTAT</th>
-                </tr>
-
-                {% for ip_job in ip_jobs %}
-                <tr>
-                    <td>{{ip_job.service_order}}</td>
-                    <td>{{ip_job.enduser}}</td>
-                    <td>{{ip_job.required_start_date}}</td>
-                    <td>{{ip_job.required_end_date}}</td>
-                    <td>{{ip_job.priority}}</td>
-                    <td>{{ip_job.ctat}}</td>
-                </tr>
-                {% endfor %}
-
-            </table>
-        </div> -->
     </div>
 
 </div>

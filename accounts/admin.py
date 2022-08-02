@@ -7,7 +7,6 @@ from .models import *
 #     fields = ['store', 'report', 'status', 'issue', 'covid_compliance']
 
 admin.site.register(Reportgeneration)
-admin.site.register(equipment_inventory)
 admin.site.register(approval_for_work)
 admin.site.register(discrepancy_report)
 admin.site.register(Maintable)

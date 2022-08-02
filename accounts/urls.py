@@ -11,7 +11,7 @@ urlpatterns = [
     path('restricted/', views.accessRestricted, name="restricted"),
 
     #email with file
-    path('send_email/', views.EmailAttachementView, name='send_email'),
+    path('send_email/', views.send_email, name='send_email'),
     # path('statistics_page/', views.statistics_page, name='statistics_page'),
     
     path('login/', views.loginPage, name='login'),

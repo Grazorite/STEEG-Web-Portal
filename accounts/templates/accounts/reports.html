@@ -20,13 +20,13 @@
                             <th>CTAT</th>
                         </tr>
             
-                    {% for report in ip_jobs %}
+                    {% for report in maintable_jobs %}
                         <tr>
                             <td>{{report.service_order}}</td>
                             <td>{{report.enduser}}</td>
                             <td>{{report.required_start_date}}</td>
                             <td>{{report.required_end_date}}</td>
-                            <td>{{report.priority}}</td>
+                            <td>{{report.priority_text}}</td>
                             <td>{{report.ctat}}</td>
                         </tr>
                     {% endfor %}

@@ -7,7 +7,7 @@
        <h5 class="card-title">Jobs In Progress</h5>
       </div>
       <div class="card-body">
-        <h3 class="card-title">{{total_ip_jobs}}</h3>
+        <h3 class="card-title">{{total_maintable_jobs}}</h3>
       </div>
    </div>
   </div>
@@ -21,13 +21,6 @@
       </div>
       <div class="card-body">
         <h3 class="card-title">1</h3>
-      </tr>
-      {% for job in jobs %}
-          <tr>
-              <td>{{job.name}}</td>
-              <td>{{job.audit_date}}</td>
-          </tr>
-      {% endfor %}
       </div>
    </div>
   </div>

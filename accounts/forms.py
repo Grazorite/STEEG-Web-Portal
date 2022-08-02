@@ -46,10 +46,10 @@ class createJobForm(forms.ModelForm):
         model = Maintable
         fields = [
             'service_order','service_order_user_status','notification_user_status',
-            'priority', 'mat','ctat', 'approval_status',
+            'priority_text', 'mat','ctat', 'approval_status',
             'customer_po_number','initial_po_number', 'mo_number',
             'equipment_description', 'model_number',
-            'date_in', 'required_start_date', 'required_end_date',
+            'mal_start', 'required_start_date', 'required_end_date',
             'reported_fault_long_text', 'capacity_hour', 'enduser',
             'main_work_center', 'ctat', 'calculated_ctat'
             ]
@@ -66,18 +66,18 @@ class createApprovalForWorkForm(forms.ModelForm):
         fields = ['approval_creation_date', 'AFW_id', 'service_order', 'discrepancy_id','AFW_status']
 
 class createJobUpdateStartForm(forms.ModelForm):
-    start_date_input = forms.DateTimeField(widget=DatePickerInput)
+    startdate_input = forms.DateTimeField(widget=DatePickerInput)
     start_date_actual = forms.DateTimeField(widget=DatePickerInput)
     class Meta:
         model = Jobupdatestart
-        fields = ['jobupdateid','service_order', 'start_date_actual', 'start_date_input']
+        fields = ['job_update_id','service_order', 'start_date_actual', 'start_date_input']
 
 class createJobUpdateEndForm(forms.ModelForm):
     end_date_input = forms.DateTimeField(widget=DatePickerInput)
     end_date_actual = forms.DateTimeField(widget=DatePickerInput)
     class Meta:
         model = Jobupdateend
-        fields = ['service_order', 'jobupdateid', 'end_date_actual', 'end_date_input', 'cause_of_delay']
+        fields = ['service_order', 'job_update', 'end_date_actual', 'end_date_input', 'cause_of_delay']
 
 class createJobUpdateCompleteForm(forms.ModelForm):
     mal_end_date = forms.DateTimeField(widget=DatePickerInput)

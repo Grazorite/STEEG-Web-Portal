@@ -1,3 +1,4 @@
+import contextlib
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import View
@@ -16,6 +17,7 @@ from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.views import View
 from django.views.generic import TemplateView
+from .filters import *
 # Create your views here.
 
 @login_required(login_url='login')
@@ -25,21 +27,21 @@ def dashboard(request):
 
 @login_required(login_url='login')
 def home(request):
-    ip_jobs = Maintable.objects.all()
-    total_ip_jobs = ip_jobs.count()
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
     approvals = approval_for_work.objects.all()
     total_approvals = approvals.count()
-    context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs,
+    context = {'maintable_jobs': maintable_jobs, 'total_maintable_jobs': total_maintable_jobs,
                 'approvals': approvals, 'total_approvals': total_approvals}
     return render(request, 'accounts/dashboard.html', context)
 
 @login_required(login_url='login')
 def jobs(request):
-    ip_jobs = Maintable.objects.all()
-    total_ip_jobs = ip_jobs.count()
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
     approvals = approval_for_work.objects.all()
     total_approvals = approvals.count()
-    context = {'ip_jobs': ip_jobs, 'total_ip_jobs': total_ip_jobs,
+    context = {'maintable_jobs': maintable_jobs, 'total_maintable_jobs': total_maintable_jobs,
                 'approvals': approvals, 'total_approvals': total_approvals}
     
     return render(request, 'accounts/reports.html', context)
@@ -51,56 +53,29 @@ def dash(request):
 
 @login_required(login_url='login')
 def approvals(request):
-    approvals = approval_for_work.objects.all()
-    return render(request, 'accounts/approvals.html', {'approvals': approvals})
+    approvals = Maintable.objects.all()
+    approvals_filter = ApprovalFilter(request.GET, queryset=approvals)
+    context = {
+        'approvals': approvals,
+        'approvals_filter': approvals_filter
+        }
+    return render(request, 'accounts/approvals.html', context)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def send_email(request):
-        form = EmailForm()
-        if request.method == 'POST':
-            form = EmailForm(request.POST, request.FILES)
-            if form.is_valid():
-                subject = request.POST.get('subject')
-                message = request.POST.get('message')
-                recipient = form.cleaned_data.get('email')
-                upload = request.FILES['upload']
-                send_mail(subject,
-                message, settings.EMAIL_HOST_USER, [recipient], fail_silently=True)
-                messages.success(request, 'Success!')
-                return redirect('/')
+    completedJobs = Reportgeneration.objects.all()
+    completed_job_filter = JobFilter(request.GET, queryset=completedJobs)
+    context = {
+        'completedJobs': completedJobs,
+        'completed_job_filter': completed_job_filter,
+    }
 
-                try:
-                    mail = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [email])
-                    mail.attach(attach.name, attach.read(), attach.content_type)
-                    mail.send()
-                    return render(request, self.template_name, {'email_form': form, 'error_message': 'Sent email to %s'%email})
-                except:
-                    return render(request, self.template_name, {'email_form': form, 'error_message': 'Either the attachment is too big or corrupt'})
-
-        return render(request, 'accounts/send_email.html', {'form': form})
+    return render(request, 'accounts/send_email.html', context)
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
-def EmailAttachementView(request):
-    form = EmailForm(request.POST, request.FILES)
-    if form.is_valid():
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-        email = form.cleaned_data['email']
-        files = request.FILES.getlist('attach')
-        try:
-            mail = EmailMessage(
-                subject, message, settings.EMAIL_HOST_USER, [email])
-            for f in files:
-                mail.attach(f.name, f.read(), f.content_type)
-            mail.send()
-            return redirect('/')
-            return render(request, 'accounts/send_email.html', {'form': form, 'error_message': 'Sent email to %s' % email})
-        except:
-            return render(request, 'send_email.html', {'form': form, 'error_message': 'Either the attachment is too big or corrupt'})
-    return render(request, 'accounts/send_email.html', {'form': form, 'error_message': 'Unable to send email. Please try again later'})
-
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
 
 @unauthenticated_user
 def registerPage(request):
