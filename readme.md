@@ -1,7 +1,8 @@
 # Required modules
 Use pip or conda to install these packages!
-- `django==4.0.6`
+- `django==3.2.13`
 - `django_csv_exports==1.0.5`
+- `django-filter==22.1`
 - `django-import_export==2.8.0`
 - `mssql-django==1.1.3`
 
