@@ -19,7 +19,7 @@
       </li>
       {% url 'dash' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
-        <a class="nav-link" href="{% url 'dash' %}">Dashboard</a>
+        <a class="nav-link" href="https://prod-apnortheast-a.online.tableau.com/t/nudge/views/JobTrackingDashboard/JobStatusTracking?:showAppBanner=false&:display_count=n&:showVizHome=n&:origin=viz_share_link" target="_blank">Dashboard</a>
       </li>
       {% url 'report_generation' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
