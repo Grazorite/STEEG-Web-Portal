@@ -8,13 +8,8 @@ Use pip or conda to install these packages!
 
 # To run
 `python manage.py runserver` - server should open at `http://127.0.0.1:8000/`
+
 CTRL + C to stop server
-
-LOGIN:
-- user: esc
-- pw: esc123456
-
-add `/admin` to the end of server url in browser to access backend
 
 # Making migrations
 Any edits to the Models in `models.py` require you to run the following commands to save the changes:
