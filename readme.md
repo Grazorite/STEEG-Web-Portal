@@ -7,11 +7,13 @@ Use pip or conda to install these packages!
 - `mssql-django==1.1.3`
 
 # To run
-`python manage.py runserver` - server should open at `http://127.0.0.1:8000/`
+`$ python manage.py runserver` - server should open at `http://127.0.0.1:8000/`
 
-CTRL + C to stop server
+`CTRL + C` to stop server
 
 # Making migrations
 Any edits to the Models in `models.py` require you to run the following commands to save the changes:
-- `python manage.py makemigrations`
-- `python manage.py migrate`
+
+`$ python manage.py makemigrations`
+
+`$ python manage.py migrate`
