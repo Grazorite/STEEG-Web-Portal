@@ -1,6 +1,5 @@
 import django_filters
 from django_filters import DateRangeFilter, DateFilter, DateFromToRangeFilter
-from django_filters.widgets import RangeWidget
 from .models import *
 
 ######################FILTER FOR APPROVALS PAGE##########################

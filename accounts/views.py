@@ -27,11 +27,21 @@ def home(request):
     total_maintable_jobs = maintable_jobs.count()
     pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
     total_pending_jobs = pending_jobs.count()
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
+
     context = {
             'maintable_jobs': maintable_jobs, 
             'total_maintable_jobs': total_maintable_jobs,
             'pending_jobs': pending_jobs, 
             'total_pending_jobs': total_pending_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_ongoing_jobs': total_ongoing_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_delayed_jobs': total_delayed_jobs,
             }
 
     return render(request, 'accounts/home.html', context)
@@ -43,18 +53,49 @@ def jobs(request):
     total_maintable_jobs = maintable_jobs.count()
     pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
     total_pending_jobs = pending_jobs.count()
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
+
     context = {
             'maintable_jobs': maintable_jobs, 
             'total_maintable_jobs': total_maintable_jobs,
             'pending_jobs': pending_jobs, 
             'total_pending_jobs': total_pending_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_ongoing_jobs': total_ongoing_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_delayed_jobs': total_delayed_jobs,
             }
 
     return render(request, 'accounts/reports.html', context)
 
 
 def dash(request):
-    jobs = Maintable.objects.all()
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
+
+    context = {
+            'maintable_jobs': maintable_jobs, 
+            'total_maintable_jobs': total_maintable_jobs,
+            'pending_jobs': pending_jobs, 
+            'total_pending_jobs': total_pending_jobs,
+            'combined_jobs': combined_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_ongoing_jobs': total_ongoing_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_delayed_jobs': total_delayed_jobs,
+            }
+
     return render(request, 'accounts/dash.html', {'jobs': jobs})
 
 
@@ -67,6 +108,11 @@ def approvals(request):
     approvals_filter = ApprovalFilter(request.GET, queryset=maintable_jobs)
     filtered = approvals_filter.qs
     total_filtered=len(filtered)
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
 
     context = {
         'maintable_jobs': maintable_jobs,
@@ -75,7 +121,12 @@ def approvals(request):
         'pending_jobs': pending_jobs,
         'total_pending_jobs': total_pending_jobs,
         'filtered': filtered,
-        'total_filtered': total_filtered
+        'total_filtered': total_filtered,
+        'combined_jobs': combined_jobs,
+        'ongoing_jobs': ongoing_jobs, 
+        'total_ongoing_jobs': total_ongoing_jobs,
+        'ongoing_jobs': ongoing_jobs, 
+        'total_delayed_jobs': total_delayed_jobs,
         }
 
     return render(request, 'accounts/approvals.html', context)
