@@ -1,0 +1,44 @@
+{% extends 'accounts/main.html' %}
+{% block title %} - approvals{% endblock title %}
+{% block content %}
+{% include 'accounts/stats.html' %}
+    <br>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+                    <h5>Approvals</h5>
+                    <form method="get" style="text-align:right">
+                        {{approvals_filter.form}}
+                        <button class="btn btn-sm btn-danger" type="submit">Filter</button>
+                    </form>
+                </div>
+                <div class="card card-body">
+                <table class="table table-sm">
+                        <tr>
+                         <th style="width: 25%;">Service Order</th>
+                         <th style="width: 25%;">Priority</th>
+                         <th style="width: 25%;">Malfunction Start Date</th>
+                         <th style="width: 25%;">Approval Status</th>
+                         <th style="width: 25%;">Update</th>
+                        </tr>        
+                    {% for approval in approvals_filter.qs %}
+                        <tr>
+                        <td>{{approval.service_order}}</td>
+                        <td>{{approval.priority_text}}</td>
+                        <td>{{approval.mal_start}}</td>
+                        <td>{{approval.approval_status}}</td>
+                        <td align ="right">
+                            <a href="{% url 'updateapproval' approval.service_order%}">
+                            <button class="btn btn-outline-secondary btn-sm">Update</button></a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+{% endblock %}

@@ -11,23 +11,20 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'announcements' %}">Notifications<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'approvals' %}">Approvals<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'reports' %}">Current Jobs</a>
+        <a class="nav-link" href="{% url 'jobs' %}">Jobs</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'jobs' %}">New Jobs</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'chart' %}">DashBoard</a>
+        <a class="nav-link" href="{% url 'dash' %}">DashBoard</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           For Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Lorem ipsum</a>
+          <a class="dropdown-item" href="{% url 'report_generation' %}">Generate Report</a>
         </div>
       </li>
     </ul>

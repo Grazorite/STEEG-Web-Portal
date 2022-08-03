@@ -1,3 +1,4 @@
+import contextlib
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import View
@@ -16,45 +17,113 @@ from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.views import View
 from django.views.generic import TemplateView
-from .models import AuditScore
+from .filters import *
+import csv
 # Create your views here.
-
 
 @login_required(login_url='login')
 def home(request):
-    jobs = job_status.objects.all()
-    total_jobs = jobs.count()
-    pending = jobs.filter(Q(approval_status='Pending')).count()
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    context = {
+            'maintable_jobs': maintable_jobs, 
+            'total_maintable_jobs': total_maintable_jobs,
+            }
 
-    context = {'jobs': jobs, 'total_jobs': total_jobs, 'pending':pending}
-    return render(request, 'accounts/dashboard.html', context)
+    return render(request, 'accounts/home.html', context)
 
 
 @login_required(login_url='login')
 def jobs(request):
-    jobs = job_status.objects.all()
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    context = {
+        'maintable_jobs': maintable_jobs, 
+        'total_maintable_jobs': total_maintable_jobs,
+        }
 
-    return render(request, 'accounts/jobs.html', {'jobs': jobs})
-
-
-@login_required(login_url='login')
-def reports(request):
-    reports = NonFBReport.objects.all()
-    print(reports)
-    # TODO: fix total_score
-    #total_score = reports.compliance.all()
-    total_score = 0
-    print(total_score)
-
-    context = {'reports': reports, 'total_score': total_score}
     return render(request, 'accounts/reports.html', context)
 
 
-@login_required(login_url='login')
-def announcements(request):
-    announcements = Announcement.objects.all()
-    return render(request, 'accounts/announcements.html', {'announcements': announcements})
+def dash(request):
+    jobs = Maintable.objects.all()
+    return render(request, 'accounts/home.html', {'jobs': jobs})
 
+
+@login_required(login_url='login')
+def approvals(request):
+    approvals = Maintable.objects.all()
+    total_maintable_jobs = approvals.count()
+    approvals_filter = ApprovalFilter(request.GET, queryset=approvals)
+    filtered = approvals_filter.qs
+    total_filtered=len(filtered)
+
+    context = {
+        'approvals': approvals,
+        'approvals_filter': approvals_filter,
+        'total_maintable_jobs': total_maintable_jobs,
+        'filtered': filtered,
+        'total_filtered': total_filtered
+        }
+
+    return render(request, 'accounts/approvals.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def update_approval(request, service_order):
+    approval = Maintable.objects.get(pk=service_order)
+    form = createJobForm(request.POST or None, instance=approval)
+    if form.is_valid():
+        form.save()
+        return redirect('approvals')
+    
+    context = {
+        'approval': approval,
+        'form': form
+    }
+
+    return render(request, 'accounts/update_approval.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def report_generation(request):
+    completedJobs = Reportgeneration.objects.all()
+    completed_job_filter = JobFilter(request.GET, queryset=completedJobs)
+
+    context = {
+        'completedJobs': completedJobs,
+        'completed_job_filter': completed_job_filter,
+    }
+
+    return render(request, 'accounts/report_generation.html', context)
+
+def generate_report_csv(request):
+    reportJobs = Reportgeneration.objects.all()
+    search = JobFilter(request.GET, queryset= reportJobs).qs
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=completed_jobs.csv'
+
+    # Create a csv writer
+    writer = csv.writer(response)
+
+    # Designate The Model
+    writer.writerow([
+        'SERVICE_ORDER', 'SYSTEM', 'MAT', 'PRIORITY_TEXT', 'MAL_START', 'MAL_END',
+        'CTAT', 'TET', 'Out_By', 'ATAT', 'A_W_SPARE', 'A_W_FACILITY', 'A_W_OTHER_JOB',
+        'INST', 'OTH', 'AWAIT_UNIT_ACCEPT', 'MULTIPLE_FAULTS', 'REMARKS', 
+        'EQUIPMENT_DESCRIPTION', 'MODEL_NUMBER', 'SERIAL_NO', 'Reported_Fault_Long_Text'
+        ])
+
+    #Loop Through Queryset
+    for i in search:
+        writer.writerow([
+            i.service_order, i.system, i.mat, i.priority_text, i.mal_start,
+            i.mal_end, i.ctat, i.tet, i.out_by, i.atat, i.a_w_spare, i.a_w_facility,
+            i.a_w_other_job, i.inst, i.oth, i.await_unit_accept, i.multiple_faults,
+            i.remarks, i.equipment_description, i.model_number, i.serial_no, i.reported_fault_long_text
+        ])
+
+    return response
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['admin'])
 
 @unauthenticated_user
 def registerPage(request):
@@ -62,7 +131,7 @@ def registerPage(request):
 
 
 @unauthenticated_user
-def registerTenantPage(request):
+def registerEngineerPage(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -83,7 +152,7 @@ def registerTenantPage(request):
 
             user = form.save()
 
-            group = Group.objects.get(name='tenant')
+            group = Group.objects.get(name='Engineer')
             user.groups.add(group)
 
             messages.success(request, 'Account was created for ' + username)
@@ -91,8 +160,73 @@ def registerTenantPage(request):
             return redirect('login')
 
     context = {'form': form}
-    return render(request, 'accounts/registerTenant.html', context)
+    return render(request, 'accounts/registerEngineer.html', context)
 
+
+@unauthenticated_user
+def registerDstarPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email').lower()
+
+            brk = True
+
+            try:
+                User.objects.get(username__iexact=username)
+            except:
+                brk = False
+
+            if brk:
+                messages.warning(request, 'Username already in use')
+                return redirect('login')
+
+            user = form.save()
+
+            group = Group.objects.get(name='DSTAR')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for ' + username)
+
+            return redirect('login')
+
+    context = {'form': form}
+    return render(request, 'accounts/registerDstar.html', context)
+
+
+@unauthenticated_user
+def registerRsafPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username').lower()
+            email = form.cleaned_data.get('email').lower()
+
+            brk = True
+
+            try:
+                User.objects.get(username__iexact=username)
+            except:
+                brk = False
+
+            if brk:
+                messages.warning(request, 'Username already in use')
+                return redirect('login')
+
+            user = form.save()
+
+            group = Group.objects.get(name='RSAF')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for ' + username)
+
+            return redirect('login')
+
+    context = {'form': form}
+    return render(request, 'accounts/registerRsaf.html', context)
 
 @unauthenticated_user
 def registerAdminPage(request):
@@ -154,19 +288,6 @@ def logoutUser(request):
 
 
 @login_required(login_url='login')
-def createRectification(request):
-    if request.method == 'POST':
-        form = RectifyForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    else:
-        form = RectifyForm()
-    context = {'form': form}
-    return render(request, 'accounts/rectify_form.html', context)
-
-
-@login_required(login_url='login')
 def createDiscrepancy(request):
     if request.method == 'POST':
 
@@ -216,22 +337,55 @@ def createApprovalForWork(request):
     context = {'form': form, 'pageTitle': 'Approval For Work'}
     return render(request, 'accounts/createReport_form.html', context)
 
+@login_required(login_url='login')
+def createJobUpdateStart(request):
+    if request.method == 'POST':
 
-class AccountChartView(TemplateView):
-    template_name = 'accounts/chart.html'
+        form = createJobUpdateStartForm(request.POST, request.FILES)
+        if form.is_valid():
+            # uploaded_file = request.FILES['file']
+            # instance.save()
+            form.save()
+            return redirect('/')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['qs'] = AuditScore.objects.all()
-        return context
+    else:
+        form = createJobUpdateStartForm()
+    context = {'form': form, 'pageTitle': 'Job Update Start'}
+    return render(request, 'accounts/createReport_form.html', context)
 
+
+@login_required(login_url='login')
+def createJobUpdateEnd(request):
+    if request.method == 'POST':
+
+        form = createJobUpdateEndForm(request.POST, request.FILES)
+        if form.is_valid():
+            # uploaded_file = request.FILES['file']
+            # instance.save()
+            form.save()
+            return redirect('/')
+
+    else:
+        form = createJobUpdateEndForm()
+    context = {'form': form, 'pageTitle': 'Job Update End'}
+    return render(request, 'accounts/createReport_form.html', context)
+
+@login_required(login_url='login')
+def createJobUpdateComplete(request):
+    if request.method == 'POST':
+
+        form = createJobUpdateCompleteForm(request.POST, request.FILES)
+        if form.is_valid():
+            # uploaded_file = request.FILES['file']
+            # instance.save()
+            form.save()
+            return redirect('/')
+
+    else:
+        form = createJobUpdateCompleteForm()
+    context = {'form': form, 'pageTitle': 'Job Completion'}
+    return render(request, 'accounts/createReport_form.html', context)
 
 @login_required(login_url='login')
 def accessRestricted(request):
     return render(request, 'accounts/restricted.html')
-
-
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['admin'])
-# def testAccess(request):
-#     return render(request, 'accounts/dashboard.html')

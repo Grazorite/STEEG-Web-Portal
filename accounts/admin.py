@@ -6,8 +6,10 @@ from .models import *
 # class RectifyAdmin(admin.ModelAdmin):
 #     fields = ['store', 'report', 'status', 'issue', 'covid_compliance']
 
-admin.site.register(steeg_user)
-admin.site.register(job_status)
-admin.site.register(equipment_inventory)
+admin.site.register(Reportgeneration)
 admin.site.register(approval_for_work)
 admin.site.register(discrepancy_report)
+admin.site.register(Maintable)
+admin.site.register(Jobupdatestart)
+admin.site.register(Jobupdateend)
+admin.site.register(Jobupdatecomplete)

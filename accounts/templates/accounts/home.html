@@ -1,0 +1,28 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/stats.html' %}
+
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h4>Job Creation Forms:</h4>
+            <a class="btn btn-outline-success  btn-lg btn-block" href="{% url 'createJob_form' %}">Input New Job</a>
+            <a class="btn btn-outline-success  btn-lg btn-block" href="{% url 'createDiscrepancy_form' %}">Create Job Discrepancy Report</a>
+            <a class="btn btn-outline-success  btn-lg btn-block" href="{% url 'createApprovalForWork_form' %}">Create Approval For Work</a>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h4>Job Update Forms:</h4>
+            <a class="btn btn-outline-success  btn-lg btn-block" href="{% url 'createJobUpdateStart_form' %}">Update Job Status (Delay Start)</a>
+            <a class="btn btn-outline-success  btn-lg btn-block" href="{% url 'createJobUpdateEnd_form' %}">Update Job Status (Delay End)</a>
+            <a class="btn btn-outline-success  btn-lg btn-block" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

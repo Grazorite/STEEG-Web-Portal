@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'accounts',
     'django_csv_exports',
+    'import_export',
+
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'crm1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'db.sqlite3',],
+        'DIRS': [BASE_DIR / 'templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,9 +82,16 @@ WSGI_APPLICATION = 'crm1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'mssql',
+        'NAME': 'STEEG-capstone',
+        'USER': 'steeg-capstone@steeg-capstone',
+        'PASSWORD': 'Opshub2022',
+        'HOST': 'steeg-capstone.database.windows.net',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'SQL Server Native Client 11.0',
+        },
+    },
 }
 
 

@@ -1,0 +1,51 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <div class="card card-body", style="margin: 0px 0px">
+            <h5>Filter Results</h5>
+            <div class="form-group">
+            <form method="get">
+                <p>{{completed_job_filter.form}}</p>
+                <p>{{date_filter.form}}</p>
+                <button class="btn btn-sm btn-danger" type="submit">Filter</button>
+            </form>
+            </div>
+        </div>
+        <div class="card card-body", style="margin: 0px 0px">
+            <h5>Download Report</h5>
+            <a href="{% url 'generatereportcsv' %}?{{request.GET.urlencode}}">
+            <button class="btn btn-sm btn-danger" type="button">Export To CSV</button></a>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="card card-body">
+            <table class="table table-sm" style="margin-top: 30px;">
+                <h5>Completed Jobs:</h5>
+                <tr>
+                    <th>Service Order</th>
+                    <th>CTAT</th>
+                    <th>ATAT</th>
+                    <th>TET</th>
+                    <th>Malfunction Start</th>
+                    <th>Malfunction End</th>
+                    <th>Remarks</th>
+                </tr>
+                {% for completedJob in completed_job_filter.qs%}
+                <tr>
+                    <td>{{completedJob.service_order}}</td>
+                    <td>{{completedJob.ctat}}</td>
+                    <td>{{completedJob.atat}}</td>
+                    <td>{{completedJob.tet}}</td>
+                    <td>{{completedJob.mal_start}}</td>
+                    <td>{{completedJob.mal_end}}</td>
+                    <td>{{completedJob.remarks}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
