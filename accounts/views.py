@@ -25,9 +25,13 @@ import csv
 def home(request):
     maintable_jobs = Maintable.objects.all()
     total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
     context = {
             'maintable_jobs': maintable_jobs, 
             'total_maintable_jobs': total_maintable_jobs,
+            'pending_jobs': pending_jobs, 
+            'total_pending_jobs': total_pending_jobs,
             }
 
     return render(request, 'accounts/home.html', context)
@@ -37,31 +41,39 @@ def home(request):
 def jobs(request):
     maintable_jobs = Maintable.objects.all()
     total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
     context = {
-        'maintable_jobs': maintable_jobs, 
-        'total_maintable_jobs': total_maintable_jobs,
-        }
+            'maintable_jobs': maintable_jobs, 
+            'total_maintable_jobs': total_maintable_jobs,
+            'pending_jobs': pending_jobs, 
+            'total_pending_jobs': total_pending_jobs,
+            }
 
     return render(request, 'accounts/reports.html', context)
 
 
 def dash(request):
     jobs = Maintable.objects.all()
-    return render(request, 'accounts/home.html', {'jobs': jobs})
+    return render(request, 'accounts/dash.html', {'jobs': jobs})
 
 
 @login_required(login_url='login')
 def approvals(request):
-    approvals = Maintable.objects.all()
-    total_maintable_jobs = approvals.count()
-    approvals_filter = ApprovalFilter(request.GET, queryset=approvals)
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
+    approvals_filter = ApprovalFilter(request.GET, queryset=maintable_jobs)
     filtered = approvals_filter.qs
     total_filtered=len(filtered)
 
     context = {
-        'approvals': approvals,
+        'maintable_jobs': maintable_jobs,
         'approvals_filter': approvals_filter,
         'total_maintable_jobs': total_maintable_jobs,
+        'pending_jobs': pending_jobs,
+        'total_pending_jobs': total_pending_jobs,
         'filtered': filtered,
         'total_filtered': total_filtered
         }
@@ -87,10 +99,17 @@ def update_approval(request, service_order):
 def report_generation(request):
     completedJobs = Reportgeneration.objects.all()
     completed_job_filter = JobFilter(request.GET, queryset=completedJobs)
-
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
     context = {
         'completedJobs': completedJobs,
         'completed_job_filter': completed_job_filter,
+        'maintable_jobs': maintable_jobs,
+        'total_maintable_jobs': total_maintable_jobs,
+        'pending_jobs': pending_jobs,
+        'total_pending_jobs': total_pending_jobs,
     }
 
     return render(request, 'accounts/report_generation.html', context)
