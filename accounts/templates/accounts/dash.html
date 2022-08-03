@@ -2,12 +2,15 @@
     {% extends 'accounts/main.html' %}
     {% block title %} - jobs{% endblock title %}
     {% block content %}
+    <script type="module" src="https://online.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 <head>
     <meta charset="utf-8">
     <title>Embedded Analytics with Tableau Online</title>
 </head>
 <body>
-    <div class='tableauPlaceholder' style='width: 1000px; height: 827px;'><object class='tableauViz' width='1000' height='827' style='display:none;'><param name='host_url' value='https%3A%2F%2Fprod-apnortheast-a.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;nudge' /><param name='name' value='DashBoardWebPage&#47;Dashboard1_1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /></object></div>
+    <tableau-viz id="tableauViz"       
+        src='https://prod-apnortheast-a.online.tableau.com/#/site/nudge/views/DashBoardWebPage/Dashboard1_1'>
+    </tableau-viz>
 </body>
 {% endblock %}
 </html>
