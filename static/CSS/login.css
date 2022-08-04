@@ -1,3 +1,118 @@
-#bootstrap-overrides body{
-    background-color: #000000 !important;
+#login-image{
+    background-image: url("../images/login_background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: auto;
+}
+
+#login-body {
+    
+        background-image: url("../images/login_background_transparent.png");
+        background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: auto;
+    }
+    
+.responsive{
+    position: relative;
+    height: auto;
+    max-width: 100%;
+    width: auto;
+    min-width: 0;
+}
+
+.user_card {
+    width: 100%;;
+    
+    
+    background: #ffffff;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px; */
+
+}
+
+#title{
+    color: #000000;
+    font-size:xxx-large;
+    font-weight: 900;
+
+}
+
+
+.form_container {
+    margin-top: 10px;
+}
+
+#form-title{
+    color: #000000;
+    
+}
+
+.login_btn {
+    width: 100%;
+    background: #0B3273  !important;
+    color: white  !important;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+.login_btn:hover {
+    background: #090F40!important;
+}
+.login_container {
+    padding: 0 2rem;
+}
+.input-group-text {
+    background: #979797b0  !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+#messages{
+    background-color: rgb(177, 3, 3);
+    color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#left {
+    height: 120vh;
+    width: 75vw;
+    background-color: #FCE7A0;
+    left: -75vh;
+    bottom: -40vw;
+}
+
+#right {
+    height: 50vh;
+    width: 35vw;
+    background-color: #F9CEAD;
+    right: -35vh;
+    top: -15vw;
+}
+
+
+
+
+h3 {
+    font-family: Tahoma, sans-serif;
 }
