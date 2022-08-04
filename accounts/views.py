@@ -411,8 +411,7 @@ def createDiscrepancy(request):
 
         form = createDiscrepancyForm(request.POST, request.FILES)
         if form.is_valid():
-            # uploaded_file = request.FILES['file']
-            # instance.save()
+            call_function()
             form.save()
             return redirect('/')
 
@@ -428,8 +427,6 @@ def createJob(request):
 
         form = createJobForm(request.POST, request.FILES)
         if form.is_valid():
-            # uploaded_file = request.FILES['file']
-            # instance.save()
             call_function()
             form.save()
             return redirect('/')
@@ -446,8 +443,7 @@ def createApprovalForWork(request):
 
         form = createApprovalForWorkForm(request.POST, request.FILES)
         if form.is_valid():
-            # uploaded_file = request.FILES['file']
-            # instance.save()
+            call_function()
             form.save()
             return redirect('/')
 
@@ -462,8 +458,7 @@ def createJobUpdateStart(request):
 
         form = createJobUpdateStartForm(request.POST, request.FILES)
         if form.is_valid():
-            # uploaded_file = request.FILES['file']
-            # instance.save()
+            call_function()
             form.save()
             return redirect('/')
 
@@ -479,8 +474,7 @@ def createJobUpdateEnd(request):
 
         form = createJobUpdateEndForm(request.POST, request.FILES)
         if form.is_valid():
-            # uploaded_file = request.FILES['file']
-            # instance.save()
+            call_function()
             form.save()
             return redirect('/')
 
@@ -495,8 +489,6 @@ def createJobUpdateComplete(request):
 
         form = createJobUpdateCompleteForm(request.POST, request.FILES)
         if form.is_valid():
-            # uploaded_file = request.FILES['file']
-            # instance.save()
             call_function()
             form.save()
             return redirect('/')
