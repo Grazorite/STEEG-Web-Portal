@@ -8,7 +8,7 @@ class ApprovalFilter(django_filters.FilterSet):
         model = Maintable
         fields = {
             'approval_status': ['exact'],
-            'service_order': ['icontains']
+            # 'service_order': ['icontains']
             }
 
 #####################FILTER FOR JOBS PAGE################################

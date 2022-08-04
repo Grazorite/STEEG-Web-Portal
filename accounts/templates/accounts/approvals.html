@@ -4,16 +4,19 @@
 {% include 'accounts/stats.html' %}
     <br>
         <div class="row">
-            <div class="col-md">
-                <div class="card card-body">
-                    <h5>Approvals</h5>
-                    <form method="get" style="text-align:right">
-                        {{approvals_filter.form}}
+            <div class="col-md-2">
+                <div class="card card-body", style="margin: 0px 0px">
+                    <h5>Filter Approvals</h5>
+                    <form method="get">
+                        <p>{{approvals_filter.form}}</p>
                         <button class="btn btn-sm btn-danger" type="submit">Filter</button>
                     </form>
                 </div>
-                <div class="card card-body">
-                <table class="table table-sm">
+            </div>
+            <div class="col-md-10">
+                <div class="card card-body", style="margin: 0px 0px">
+                    <h5>Approval Status</h5>
+                    <table class="table table-sm">
                         <tr>
                          <th style="width: 25%;">Service Order</th>
                          <th style="width: 25%;">Priority</th>
@@ -27,7 +30,7 @@
                         <td>{{approval.priority_text}}</td>
                         <td>{{approval.mal_start}}</td>
                         <td>{{approval.approval_status}}</td>
-                        <td align ="right">
+                        <td>
                             <a href="{% url 'updateapproval' approval.service_order%}">
                             <button class="btn btn-outline-secondary btn-sm">Update</button></a>
                         </td>
