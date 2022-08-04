@@ -2,14 +2,26 @@ body,
 .bg {
   background-color: #fefdf8;
 }
-#score {
-  background-color: #f2a63c;
+#total {
+  background-color: #555555;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
 }
-#AuditDay {
-  background-color: #f2a63c;
+#on-track {
+  background-color: #5a8660;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
 }
-#rectify {
-  background-color: #f2a63c;
+#delay {
+  background-color: #aa5858;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+#approval-pending {
+  background-color: #555555;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
 }
 
 *.btn-primary {
