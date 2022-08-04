@@ -11,10 +11,7 @@ urlpatterns = [
     path('approvals/', views.approvals, name='approvals'),
     path('restricted/', views.accessRestricted, name="restricted"),
     path('generate_report_csv', views.generate_report_csv, name='generatereportcsv'),
-
-    #email with file
     path('report_generation/', views.report_generation, name='report_generation'),
-    # path('statistics_page/', views.statistics_page, name='statistics_page'),
     
     path('login/', views.loginPage, name='login'),
     path('register/admin/', views.registerAdminPage, name='registeradmin'),

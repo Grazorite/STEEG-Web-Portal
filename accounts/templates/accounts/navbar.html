@@ -1,23 +1,25 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light bg">
-  <a href="{% url 'home' %}">
-    <img src="{% static 'images/Singapore Tech Engineering Ltd.png' %}" width="70" style="margin-right: 10px;">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light bg">
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'images/STEng.png' %}" width="200" style="margin-right: 10px;">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'approvals' %}">Approvals<span class="sr-only">(current)</span></a>
+      {% url 'approvals' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'approvals' %}">Approvals</a>
       </li>
-      <li class="nav-item">
+      {% url 'jobs' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
         <a class="nav-link" href="{% url 'jobs' %}">Jobs</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'dash' %}">DashBoard</a>
+      {% url 'dash' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
+        <a class="nav-link" href="https://prod-apnortheast-a.online.tableau.com/t/nudge/views/JobTrackingDashboard/JobStatusTracking?:showAppBanner=false&:display_count=n&:showVizHome=n&:origin=viz_share_link" target="_blank">Dashboard</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'createJobUpdateStart_form' %}">Update Job Status (Delay Start)</a>
@@ -28,13 +30,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          For Admin
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'report_generation' %}">Generate Report</a>
-        </div>
+      {% url 'report_generation' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'report_generation' %}">Completed Jobs</a>
       </li>
     </ul>
 
@@ -45,8 +43,6 @@
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href=""><b>{{ user.get_username }}</b></a>
         <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-        <!-- <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a> -->
       </div>
     </div>
   </div>

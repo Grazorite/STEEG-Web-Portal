@@ -9,23 +9,25 @@
         margin-right: 10px!important;
     }
     label {
-        margin-right: 15px;
+        margin-right: 10px;
     }
 </style>
 {% endblock cssblock %}
 
 {% block content %}
+<br>
 <div class="card card-body" style="margin: 0 5%;">
     <div>
-        <div style="margin: 20px 0px; color: #0069D9">
+        <div style="padding-left: 10px; color: #0069D9">
             <h1>{{ pageTitle }}</h1>
         </div>
     </div>
+    <br>
     <div style="padding-left: 10px;">
         <form action="" method="POST">
             {% csrf_token %}
             {{form.as_p}}
-            <input type="submit" name="submit" class="btn btn-secondary">
+            <input type="submit" name="submit" class="btn btn-lg btn-success">
 
         </form>
     </div>

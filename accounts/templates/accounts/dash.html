@@ -1,0 +1,16 @@
+<html lang="en">
+    {% extends 'accounts/main.html' %}
+    {% block title %} - jobs{% endblock title %}
+    {% block content %}
+    <script type="module" src="https://online.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Embedded Analytics with Tableau Online</title>
+</head>
+<body>
+    <tableau-viz id="tableauViz"       
+        src='https://prod-apnortheast-a.online.tableau.com/#/site/nudge/views/DashBoardWebPage/Dashboard1_1'>
+    </tableau-viz>
+</body>
+{% endblock %}
+</html>

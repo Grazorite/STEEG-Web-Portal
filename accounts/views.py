@@ -25,9 +25,23 @@ import csv
 def home(request):
     maintable_jobs = Maintable.objects.all()
     total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
+
     context = {
             'maintable_jobs': maintable_jobs, 
             'total_maintable_jobs': total_maintable_jobs,
+            'pending_jobs': pending_jobs, 
+            'total_pending_jobs': total_pending_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_ongoing_jobs': total_ongoing_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_delayed_jobs': total_delayed_jobs,
             }
 
     return render(request, 'accounts/home.html', context)
@@ -37,33 +51,82 @@ def home(request):
 def jobs(request):
     maintable_jobs = Maintable.objects.all()
     total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
+
     context = {
-        'maintable_jobs': maintable_jobs, 
-        'total_maintable_jobs': total_maintable_jobs,
-        }
+            'maintable_jobs': maintable_jobs, 
+            'total_maintable_jobs': total_maintable_jobs,
+            'pending_jobs': pending_jobs, 
+            'total_pending_jobs': total_pending_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_ongoing_jobs': total_ongoing_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_delayed_jobs': total_delayed_jobs,
+            }
 
     return render(request, 'accounts/reports.html', context)
 
 
 def dash(request):
-    jobs = Maintable.objects.all()
-    return render(request, 'accounts/home.html', {'jobs': jobs})
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
+
+    context = {
+            'maintable_jobs': maintable_jobs, 
+            'total_maintable_jobs': total_maintable_jobs,
+            'pending_jobs': pending_jobs, 
+            'total_pending_jobs': total_pending_jobs,
+            'combined_jobs': combined_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_ongoing_jobs': total_ongoing_jobs,
+            'ongoing_jobs': ongoing_jobs, 
+            'total_delayed_jobs': total_delayed_jobs,
+            }
+
+    return render(request, 'accounts/dash.html', {'jobs': jobs})
 
 
 @login_required(login_url='login')
 def approvals(request):
-    approvals = Maintable.objects.all()
-    total_maintable_jobs = approvals.count()
-    approvals_filter = ApprovalFilter(request.GET, queryset=approvals)
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
+    approvals_filter = ApprovalFilter(request.GET, queryset=maintable_jobs)
     filtered = approvals_filter.qs
     total_filtered=len(filtered)
+    combined_jobs = Fullcombined.objects.all()
+    ongoing_jobs = combined_jobs.filter(job_status = 'ON-TRACK')
+    total_ongoing_jobs = ongoing_jobs.count()
+    delayed_jobs = combined_jobs.filter(job_status = 'DELAYED')
+    total_delayed_jobs = delayed_jobs.count()
 
     context = {
-        'approvals': approvals,
+        'maintable_jobs': maintable_jobs,
         'approvals_filter': approvals_filter,
         'total_maintable_jobs': total_maintable_jobs,
+        'pending_jobs': pending_jobs,
+        'total_pending_jobs': total_pending_jobs,
         'filtered': filtered,
-        'total_filtered': total_filtered
+        'total_filtered': total_filtered,
+        'combined_jobs': combined_jobs,
+        'ongoing_jobs': ongoing_jobs, 
+        'total_ongoing_jobs': total_ongoing_jobs,
+        'ongoing_jobs': ongoing_jobs, 
+        'total_delayed_jobs': total_delayed_jobs,
         }
 
     return render(request, 'accounts/approvals.html', context)
@@ -87,10 +150,17 @@ def update_approval(request, service_order):
 def report_generation(request):
     completedJobs = Reportgeneration.objects.all()
     completed_job_filter = JobFilter(request.GET, queryset=completedJobs)
-
+    maintable_jobs = Maintable.objects.all()
+    total_maintable_jobs = maintable_jobs.count()
+    pending_jobs = maintable_jobs.filter(approval_status = 'Pending')
+    total_pending_jobs = pending_jobs.count()
     context = {
         'completedJobs': completedJobs,
         'completed_job_filter': completed_job_filter,
+        'maintable_jobs': maintable_jobs,
+        'total_maintable_jobs': total_maintable_jobs,
+        'pending_jobs': pending_jobs,
+        'total_pending_jobs': total_pending_jobs,
     }
 
     return render(request, 'accounts/report_generation.html', context)

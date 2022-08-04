@@ -88,6 +88,50 @@ class Reportgeneration(models.Model):
     def __str__(self):
         return str(self.service_order)
 
+###########################FOR COMBINEDDF###################################################
+
+class Fullcombined(models.Model):
+    service_order = models.BigIntegerField(db_column='SERVICE_ORDER', primary_key=True)  # Field name made lowercase.
+    service_order_user_status = models.CharField(db_column='SERVICE_ORDER_USER_STATUS', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    notification_user_status = models.CharField(db_column='NOTIFICATION_USER_STATUS', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    priority_text = models.CharField(db_column='PRIORITY_TEXT', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    mat = models.CharField(db_column='MAT', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    customer_po_number = models.CharField(db_column='CUSTOMER_PO_NUMBER', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    initial_po_number = models.CharField(db_column='Initial_PO_Number', max_length=1, blank=True, null=True)  # Field name made lowercase.
+    mo_number = models.FloatField(db_column='MO_NUMBER', blank=True, null=True)  # Field name made lowercase.
+    equipment_description = models.CharField(db_column='EQUIPMENT_DESCRIPTION', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    model_number = models.CharField(db_column='MODEL_NUMBER', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    serial_no = models.CharField(db_column='SERIAL_NO', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    mal_start = models.DateField(db_column='MAL_START')  # Field name made lowercase.
+    required_start_date = models.DateField(db_column='Required_Start_Date')  # Field name made lowercase.
+    required_end_date = models.DateField(db_column='Required_End_Date', blank=True, null=True)  # Field name made lowercase.
+    reported_fault_long_text = models.CharField(db_column='Reported_Fault_Long_Text', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    capacity_hour = models.FloatField(db_column='CAPACITY_HOUR', blank=True, null=True)  # Field name made lowercase.
+    enduser = models.CharField(db_column='ENDUSER', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    main_work_center = models.CharField(db_column='MAIN_WORK_CENTER', max_length=50)  # Field name made lowercase.
+    ctat = models.FloatField(db_column='CTAT', blank=True, null=True)  # Field name made lowercase.
+    calculated_ctat = models.CharField(db_column='Calculated_CTAT', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    approval_status = models.CharField(db_column='APPROVAL_STATUS', max_length=50)  # Field name made lowercase.
+    a_w_spare = models.SmallIntegerField(db_column='A_W_SPARE')  # Field name made lowercase.
+    a_w_facility = models.SmallIntegerField(db_column='A_W_FACILITY')  # Field name made lowercase.
+    a_w_other_job = models.SmallIntegerField(db_column='A_W_OTHER_JOB')  # Field name made lowercase.
+    inst = models.SmallIntegerField(db_column='INST')  # Field name made lowercase.
+    oth = models.SmallIntegerField(db_column='OTH')  # Field name made lowercase.
+    await_unit_accept = models.SmallIntegerField(db_column='AWAIT_UNIT_ACCEPT')  # Field name made lowercase.
+    multiple_faults = models.SmallIntegerField(db_column='MULTIPLE_FAULTS')  # Field name made lowercase.
+    actual_tat = models.SmallIntegerField(db_column='Actual_TAT')  # Field name made lowercase.
+    tet = models.SmallIntegerField(db_column='TET')  # Field name made lowercase.
+    calculated_ctat2 = models.FloatField(db_column='Calculated_CTAT2', blank=True, null=True)  # Field name made lowercase.
+    out_by = models.FloatField(db_column='Out_By', blank=True, null=True)  # Field name made lowercase.
+    job_status = models.CharField(db_column='Job_status', max_length=50)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'FullCombined'
+
+    def __str__(self):
+        return str(self.service_order)
+
 ###########################FOR JOB UPDATE FUNCTIONALITY####################################
 
 class Jobupdatecomplete(models.Model):
