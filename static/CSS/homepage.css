@@ -1,0 +1,30 @@
+#homepage{
+    background-image: url("../images/homepage.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: auto;
+    width: auto;
+}
+
+.create_job_btn {
+    width:fit-content;
+    background: #680606  !important;
+    color: white  !important;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#homepage_title{
+    color: #ffffff;
+    font-size:xx-large;
+    font-weight: bold;
+
+}
+
+.homepage_text{
+    color: #ffffff;
+    font-size:large;
+    
+
+}

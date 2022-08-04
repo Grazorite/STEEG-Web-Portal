@@ -19,6 +19,15 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'dash' %}">DashBoard</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'createJobUpdateStart_form' %}">Update Job Status (Delay Start)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'createJobUpdateEnd_form' %}">Update Job Status (Delay End)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'createJobUpdateComplete_form' %}">Update Job Status (Job Complete)</a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           For Admin
