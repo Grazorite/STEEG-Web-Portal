@@ -28,20 +28,28 @@
                     <th>Service Order</th>
                     <th>CTAT</th>
                     <th>ATAT</th>
-                    <th>TET</th>
+                    <th>a_w_spare</th>
+                    <th>a_w_facility</th>
+                    <th>a_w_other_job</th>
+                    <th>inst</th>
+                    <th>oth</th>
+                    <th>multiple_faults</th>
                     <th>Malfunction Start</th>
                     <th>Malfunction End</th>
-                    <th>Remarks</th>
                 </tr>
                 {% for completedJob in completed_job_filter.qs%}
                 <tr>
                     <td>{{completedJob.service_order}}</td>
                     <td>{{completedJob.ctat}}</td>
                     <td>{{completedJob.atat}}</td>
-                    <td>{{completedJob.tet}}</td>
+                    <td>{{completedJob.a_w_spare}}</td>
+                    <td>{{completedJob.a_w_facility}}</td>
+                    <td>{{completedJob.a_w_other_job}}</td>
+                    <td>{{completedJob.inst}}</td>
+                    <td>{{completedJob.oth}}</td>
+                    <td>{{completedJob.multiple_faults}}</td>
                     <td>{{completedJob.mal_start}}</td>
                     <td>{{completedJob.mal_end}}</td>
-                    <td>{{completedJob.remarks}}</td>
                 </tr>
                 {% endfor %}
             </table>

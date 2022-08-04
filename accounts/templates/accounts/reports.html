@@ -13,21 +13,21 @@
                 <table class="table table-sm">
                         <tr>
                             <th>Service Order Number</th>
-                            <th>End User</th>
                             <th>Job Start Date</th>
                             <th>Required End Date</th>
                             <th>Priority</th>
-                            <th>CTAT</th>
+                            <th>Job Status</th>
+                            <th>ATAT</th>
                         </tr>
             
-                    {% for report in maintable_jobs %}
+                    {% for report in combined_jobs %}
                         <tr>
                             <td>{{report.service_order}}</td>
-                            <td>{{report.enduser}}</td>
                             <td>{{report.required_start_date}}</td>
                             <td>{{report.required_end_date}}</td>
                             <td>{{report.priority_text}}</td>
-                            <td>{{report.ctat}}</td>
+                            <td>{{report.job_status}}</td>
+                            <td>{{report.actual_tat}}</td>
                         </tr>
                     {% endfor %}
 
