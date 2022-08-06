@@ -8,7 +8,7 @@
 
 
 <br>
-<div id="homepage" class="row-3" style="height:50vh; width:100vw">
+<div id="homepage" class="row-3" style="height:40vh; width:100vw">
     <div class = "row">
         <div class = "col-1"></div>
         <div class = "col-5">
@@ -16,10 +16,9 @@
             <div id="homepage_title" class="d-flex justify-content-left"> JOB NOTIFICATIONS</div>
             <div class="d-flex justify-content-left" style="height:10px;"></div>
             <div class="d-flex justify-content-left homepage_text">There are {{total_maintable_jobs}} total jobs</div>
-            <div class="d-flex justify-content-left homepage_text"> There are {{total_pending_jobs}} jobs pending approval</div>
+            <div class="d-flex justify-content-left homepage_text"> There are {{total_filtered}} jobs pending approval</div>
             <div class="d-flex justify-content-left" style="height:10px;"></div>
     <a class="d-flex justify-content-center create_job_btn btn-lg" href="{% url 'createJob_form' %}">Register New Job</a>
-    <a class="d-flex justify-content-center create_job_btn btn-lg" href="{% url 'approvals' %}">Approve Jobs</a>
 
         </div>
         <div class = "col-6"></div>
