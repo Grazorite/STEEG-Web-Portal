@@ -11,7 +11,7 @@ import time
 
 
 def call_function():
-    print("TAT Calculation Done")
+    print("Inshella SIU")
     # =============================================================================
 # Connection to azure db
 # =============================================================================
