@@ -12,11 +12,11 @@
       {% url 'approvals' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
         <a class="nav-link" href="{% url 'approvals' %}">Approvals</a>
-      <!-- </li>
+      </li>
       {% url 'jobs' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
         <a class="nav-link" href="{% url 'jobs' %}">Jobs</a>
-      </li> -->
+      </li>
       {% url 'dash' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
         <a class="nav-link" href="https://prod-apnortheast-a.online.tableau.com/t/nudge/views/JobTrackingDashboard/JobStatusTracking?:showAppBanner=false&:display_count=n&:showVizHome=n&:origin=viz_share_link" target="_blank">Dashboard</a>
